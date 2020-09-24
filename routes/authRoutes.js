@@ -13,7 +13,7 @@ module.exports = (app) => {
 	app.get('/api/logout', (req, res) => {
 		// the logout funcion is attached automatically to the req object by passport.
 		// when we call logout() it takes the cookie containing our user.id and KILLS the 
-		// cookie.
+		// cookie. 
 		req.logout();
 		// send the user proof that they are no longer logged in
 		res.send(req.user);
