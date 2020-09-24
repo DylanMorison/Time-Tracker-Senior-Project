@@ -13,10 +13,17 @@ const User = mongoose.model('users');
 
 // define arrow function and pass it to passport.serializeUser()
 passport.serializeUser((user, done) => {
-	//whenever 
+	//user.id will identify the user in follow up requests
+	done(null, user.id);
 });
 
-
+passport.deserializeUser((id, done) => {
+	// search over all our collection
+	// call done with returned user
+	User.findById(id).then((user) => {
+		done(null, user);
+	});
+});
 
 // passport beware of the new strategy: GoogleStrategy
 passport.use(
