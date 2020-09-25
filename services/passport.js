@@ -34,29 +34,25 @@ passport.use(
 			callbackURL: '/auth/google/callback',
 			proxy: true
 		},
-		(accessToken, refreshToken, profile, done) => {
+		async (accessToken, refreshToken, profile, done) => {
 			// look through users collection and find the first
 			// user document where googleID === profile.id
 			// Anytime we reach out to our mongo DB for anyone reason we are
 			// Initiating an async action. It will consequently return a promise.
 
 			// ( TL:DR This is a query that returns a promise)
-			User.findOne({ googleID: profile.id }).then((existingUser) => {
-				if (existingUser) {
-					// we already have a record with given googleID
-					// we are all finsihed, here is the user we found!
-					done(null, existingUser);
-				} else {
-					// we dont have user record with this googleID, make a new record
-					//when we call save() it will save the model isntance to the database for us
-					new User({ googleID: profile.id })
-						.save()
-						// second instance of same model
-						// but we always make use of the one provided
-						// in the proimse callback
-						.then((user) => done(null, user));
-				}
-			});
+			const existingUser = await User.findOne({ googleID: profile.id });
+			if (existingUser) {
+				// we already have a record with given googleID
+				// we are all finsihed, here is the user we found!
+				return done(null, existingUser);
+			}
+			// we dont have user record with this googleID, make a new record
+			//when we call save() it will save the model isntance to the database for us
+			const user = await new User({ googleID: profile.id }).save();
+			// we always make use of the provided user
+			// in the proimse callback
+			done(null, user);
 		}
 	)
 );
