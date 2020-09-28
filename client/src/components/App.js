@@ -15,8 +15,8 @@ import * as actions from '../actions';
 import Header from './Header';
 import Landing from './Landing';
 
-const Dashboard = () => <h2>Dashboard</h2>;
-const SurveyNew = () => <h2>SurveyNew</h2>;
+const Activities = () => <h2>activities</h2>;
+const ActivitiesNew = () => <h2>ActivitiesNew</h2>;
 
 // BrowserRouter expects to only get one child/div
 class App extends Component {
@@ -32,8 +32,8 @@ class App extends Component {
 					<div>
 						<Header />
 						<Route exact path="/" component={Landing} />
-						<Route exact path="/surveys" component={Dashboard} />
-						<Route path="/surveys/new" component={SurveyNew} />
+						<Route exact path="/activities" component={Activities} />
+						<Route path="/activities/new" component={ActivitiesNew} />
 					</div>
 				</BrowserRouter>
 			</div>

@@ -1,13 +1,15 @@
 // this is mongoose model class used to define mongodb Users Collection
 const mongoose = require('mongoose');
-
+const ActivitySchema = require('./Activity');
 // take property Schema and apply it to variable: Schema
 // const Schema = mongoose.Schema;
 // or destructure it
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-    googleID: String
+	googleID: String,
+	username: String,
+	activities: [ActivitySchema]
 });
 
 // Hello mongoose, I want to make a new collection called 'users'

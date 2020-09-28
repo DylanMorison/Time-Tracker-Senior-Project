@@ -4,6 +4,7 @@ const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
 require('./models/User');
+require('./models/Activity');
 require('./services/passport');
 
 // connect to mongo db
@@ -38,6 +39,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/authRoutes')(app);
+require('./routes/activityRoutes')(app);
+
 
 // process.env.NODE_ENV is an envirement variable automatically set by heroku
 if (process.env.NODE_ENV === 'production') {

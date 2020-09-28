@@ -17,7 +17,7 @@ module.exports = (app) => {
 		passport.authenticate('google'),
 		// this is where the request will be sent to after passport.authenticate()
 		(req, res) => {
-			res.redirect('/surveys');
+			res.redirect('/activities');
 		}
 	);
 
