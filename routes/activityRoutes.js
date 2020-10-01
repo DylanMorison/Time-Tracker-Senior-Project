@@ -10,11 +10,16 @@ module.exports = (app) => {
         // check to see if user has any activities with same name
 
 
-        
         const activity = new Activity({
             title,
             dateCreated: Date.now()
             //_users: [req.user.id]
         });
+
+        await activity.save();
+        const user = await req.user.save()
+        res.send(user);
+        
+
 	});
 };
