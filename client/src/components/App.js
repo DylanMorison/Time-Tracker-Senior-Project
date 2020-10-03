@@ -14,14 +14,14 @@ import * as actions from '../actions';
 
 import Header from './Header';
 import Landing from './Landing';
+import Dashboard from './Dashboard';
 
 const Activities = () => <h2>activities</h2>;
 const ActivitiesNew = () => <h2>ActivitiesNew</h2>;
 
 // BrowserRouter expects to only get one child/div
 class App extends Component {
-
-	componentDidMount(){
+	componentDidMount() {
 		this.props.fetchUser();
 	}
 
@@ -32,8 +32,11 @@ class App extends Component {
 					<div>
 						<Header />
 						<Route exact path="/" component={Landing} />
-						<Route exact path="/activities" component={Activities} />
-						<Route path="/activities/new" component={ActivitiesNew} />
+						<Route exact path="/activities" component={Dashboard} />
+						<Route
+							path="/activities/new"
+							component={ActivitiesNew}
+						/>
 					</div>
 				</BrowserRouter>
 			</div>

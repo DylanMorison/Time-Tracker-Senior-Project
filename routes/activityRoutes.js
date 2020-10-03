@@ -3,23 +3,38 @@ const requireLogin = require('../middlewares/requireLogin');
 const Activity = mongoose.model('activities');
 
 module.exports = (app) => {
-	app.post('/api/activities', requireLogin, (req, res) => {
-        console.log(req.body)
-        const newTitle = req.body.title;
+	// a get request to get all activities present in the database
+	app.get('/api/activities', requireLogin, async (req, res) => {
+		_userID = req.user.id;
+		const activities = await Activity.find({ _user: req.user.id });
 
-        // check to see if user has any activities with same name
+		const activity = new Activity({
+			title,
+			dateCreated: Date.now()
+			//_users: [req.user.id]
+		});
 
+		try {
+			z;
+			await activity.save();
+			const user = await req.user.save();
+			res.send(user);
+		} catch (err) {
+			res.status(422).send(err);
+		}
+	});
 
-        const activity = new Activity({
-            title,
-            dateCreated: Date.now()
-            //_users: [req.user.id]
-        });
+	app.post('/api/createActivity', requireLogin, async (req, res) => {
+		const activity = await new Activity({
+			title: req.body.title,
+			_users: [req.user.id]
+        }).save();
 
-        await activity.save();
-        const user = await req.user.save()
+        req.user.activities.push(activity);
+        const user = await req.user.save();
         res.send(user);
         
 
+		// const user = await new User({ googleID: profile.id }).save();
 	});
 };
