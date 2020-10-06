@@ -3,11 +3,8 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import ActivityField from './ActivityField';
+import FIELDS from './formFields';
 
-const FIELDS = [
-	{ label: 'Activity Title', name: 'title' },
-	{ label: 'Activity Desciption', name: 'desciption' }
-];
 
 class ActivityForm extends React.Component {
 	renderFields() {
@@ -28,13 +25,13 @@ class ActivityForm extends React.Component {
 		return (
 			<div>
 				<form
-					onSubmit={this.props.handleSubmit((values) =>
-						console.log(values)
+					onSubmit={this.props.handleSubmit(
+						this.props.onActivitySubmit
 					)}
 				>
 					{this.renderFields()}
 					<Link to="/activities" className="red btn-flat white-text">
-						CANCEL
+						Cancel
 					</Link>
 					<button
 						type="submit"
@@ -52,11 +49,11 @@ class ActivityForm extends React.Component {
 function validate(values) {
 	const errors = {};
 
-	if (!values.title){
-		errors.title = 'You must provide a title';
-	}
-
-	
+	_.each(FIELDS, ({ name }) => {
+		if (!values[name]) {
+			errors[name] = 'You must provide a value';
+		}
+	});
 
 	return errors;
 }
@@ -64,5 +61,6 @@ function validate(values) {
 // redux form adds additional props to ActivityForm, such as this.props.handleSubmit()
 export default reduxForm({
 	validate: validate,
-	form: 'activityForm'
+	form: 'activityForm',
+	destroyOnUnmount: false
 })(ActivityForm);

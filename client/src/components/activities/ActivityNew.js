@@ -1,13 +1,30 @@
 import React from 'react';
 import ActivityForm from './ActivityForm';
+import ActivityFormReview from './ActivityFormReview';
 
 class ActivityNew extends React.Component {
-	render() {
+	state = { showFormActivity: false };
+
+	renderContent() {
+		if (this.state.showFormActivity) {
+			return (
+				<ActivityFormReview
+					onCancel={() => this.setState({ showFormActivity: false })}
+				/>
+			);
+		}
+
 		return (
-			<div>
-				<ActivityForm />
-			</div>
+			<ActivityForm
+				onActivitySubmit={() => {
+					this.setState({ showFormActivity: true });
+				}}
+			/>
 		);
+	}
+
+	render() {
+		return <div>{this.renderContent()}</div>;
 	}
 }
 
