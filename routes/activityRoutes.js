@@ -15,7 +15,6 @@ module.exports = (app) => {
 		});
 
 		try {
-			z;
 			await activity.save();
 			const user = await req.user.save();
 			res.send(user);
@@ -24,7 +23,7 @@ module.exports = (app) => {
 		}
 	});
 
-	app.post('/api/createActivity', requireLogin, async (req, res) => {
+	app.post('/api/activities/new', requireLogin, async (req, res) => {
 		const activity = await new Activity({
 			title: req.body.title,
 			_users: [req.user.id]
