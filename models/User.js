@@ -1,6 +1,5 @@
 // this is mongoose model class used to define mongodb Users Collection
 const mongoose = require('mongoose');
-const ActivitySchema = require('./Activity');
 // take property Schema and apply it to variable: Schema
 // const Schema = mongoose.Schema;
 // or destructure it
