@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
-const UserSchema = require('./Activity');
-
+const UserSchema = require('./User');
 
 const activitySchema = new Schema({
 	title: { type: String, unique: true, lowercase: true },

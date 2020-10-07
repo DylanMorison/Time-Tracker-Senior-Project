@@ -8,6 +8,8 @@ require('./models/User');
 require('./models/Activity');
 require('./services/passport');
 
+mongoose.Promise = global.Promise;
+
 // connect to mongo db
 mongoose.connect(
 	keys.MONGO_URI,
