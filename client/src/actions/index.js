@@ -12,3 +12,11 @@ export const fetchUser = () => async (dispatch) => {
 
 	dispatch({ type: FETCH_USER, payload: res.data });
 };
+
+export const submitActivity = (values, history) => async (dispatch) => {
+	const res = await axios.post('/api/activities/new', values);
+
+	history.push('/activities');
+
+	dispatch({ type: FETCH_USER, payload: res.data });
+};

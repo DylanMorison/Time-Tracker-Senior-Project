@@ -14,7 +14,7 @@ import * as actions from '../actions';
 
 import Header from './Header';
 import Landing from './Landing';
-import Dashboard from './Dashboard';
+import Activities from './Activities';
 import ActivityNew from './activities/ActivityNew';
 
 
@@ -30,7 +30,7 @@ class App extends Component {
 					<div className="container">
 						<Header />
 						<Route exact path="/" component={Landing} />
-						<Route exact path="/activities" component={Dashboard} />
+						<Route exact path="/activities" component={Activities} />
 						<Route
 							path="/activities/new"
 							component={ActivityNew}

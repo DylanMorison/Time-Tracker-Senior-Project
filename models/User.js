@@ -9,10 +9,10 @@ const { Schema } = mongoose;
 const userSchema = new Schema({
 	googleID: String,
 	username: String,
-	activities: [ActivitySchema]
 });
 
 // Hello mongoose, I want to make a new collection called 'users'
 // if our app boots up and theres already a users collection mongoose
 // will make sure userSchema matches up with our db users collection
 mongoose.model('users', userSchema);
+module.exports = userSchema;

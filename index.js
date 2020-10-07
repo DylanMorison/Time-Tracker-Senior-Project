@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const bodyParser = require('body-parser');
 require('./models/User');
 require('./models/Activity');
 require('./services/passport');
@@ -38,8 +39,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+const jsonParser = bodyParser.json();
+
 require('./routes/authRoutes')(app);
-require('./routes/activityRoutes')(app);
+require('./routes/activityRoutes')(app, jsonParser);
 
 
 // process.env.NODE_ENV is an envirement variable automatically set by heroku

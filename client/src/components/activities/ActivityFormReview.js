@@ -3,8 +3,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import FIELDS from './formFields';
+import { withRouter } from 'react-router-dom';
+import * as actions from '../../actions';
 
-const ActivityFormReview = ({ onCancel, formValues }) => {
+const ActivityFormReview = ({
+	onCancel,
+	formValues,
+	submitActivity,
+	history
+}) => {
 	const reviewFields = _.map(FIELDS, (field) => {
 		return (
 			<div key={field.name}>
@@ -21,10 +28,13 @@ const ActivityFormReview = ({ onCancel, formValues }) => {
 			<button className="red white-text btn-flat" onClick={onCancel}>
 				Back
 			</button>
-            <button className="teal btn-flat right white-text">
-                Create Activity
-                <i className="material-icons right">create</i>
-            </button>
+			<button
+				onClick={() => submitActivity(formValues, history)}
+				className="teal btn-flat right white-text"
+			>
+				Create Activity
+				<i className="material-icons right">create</i>
+			</button>
 		</div>
 	);
 };
@@ -35,4 +45,7 @@ function mapStateToProps(state) {
 	};
 }
 
-export default connect(mapStateToProps)(ActivityFormReview);
+export default connect(
+	mapStateToProps,
+	actions
+)(withRouter(ActivityFormReview));

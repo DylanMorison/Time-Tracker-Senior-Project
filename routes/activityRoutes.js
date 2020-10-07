@@ -1,39 +1,27 @@
 const mongoose = require('mongoose');
+const chalk = require('chalk');
 const requireLogin = require('../middlewares/requireLogin');
 const Activity = mongoose.model('activities');
 
-module.exports = (app) => {
-	// a get request to get all activities present in the database
-	app.get('/api/activities', requireLogin, async (req, res) => {
-		_userID = req.user.id;
-		const activities = await Activity.find({ _user: req.user.id });
+module.exports = (app, jsonParser) => {
+	app.post('/api/activities/new', jsonParser, requireLogin, async (req, res) => {
+		console.log(chalk.redBright('LOOK HERE! req'), req.body);
+		const { title, description } = req.body;
 
 		const activity = new Activity({
 			title,
-			dateCreated: Date.now()
-			//_users: [req.user.id]
+			description,
+			dateCreated: Date.now(),
+			minutes: 0,
+			hours: 0,
+			_users: [req.user.id]
 		});
-
+		
 		try {
 			await activity.save();
-			const user = await req.user.save();
-			res.send(user);
+			res.send(activity);
 		} catch (err) {
 			res.status(422).send(err);
 		}
-	});
-
-	app.post('/api/activities/new', requireLogin, async (req, res) => {
-		const activity = await new Activity({
-			title: req.body.title,
-			_users: [req.user.id]
-        }).save();
-
-        req.user.activities.push(activity);
-        const user = await req.user.save();
-        res.send(user);
-        
-
-		// const user = await new User({ googleID: profile.id }).save();
 	});
 };

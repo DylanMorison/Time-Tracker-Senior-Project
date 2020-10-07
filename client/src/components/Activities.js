@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Dashboard = () => {
+const Activities = () => {
 	return (
 		<div>
-			Dashboard
+			Activities
 			<div className="fixed-action-btn">
 				<Link to="/activities/new" className="btn-floating btn-large red">
 					<i className="material-icons">add</i>
@@ -14,4 +14,4 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+export default Activities;

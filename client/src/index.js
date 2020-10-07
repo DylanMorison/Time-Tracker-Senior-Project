@@ -6,14 +6,15 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-// reduxThunk lets us return actions from action creators that 
+// reduxThunk lets us return actions from action creators that
 // break the type, property rule
 // by giving us direct access to the dispatch function
 import reduxThunk from 'redux-thunk';
 
 import App from './components/App';
 import reducers from './reducers';
-
+import axios from 'axios';
+window.axios = axios;
 // argument 1: all the different reducers inside our app
 // argument 2: involves server side rendering
 // argument 3: middleware stuff lol
