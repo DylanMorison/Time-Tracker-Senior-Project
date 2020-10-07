@@ -2,12 +2,73 @@ const mongoose = require('mongoose');
 const chalk = require('chalk');
 const requireLogin = require('../middlewares/requireLogin');
 const Activity = mongoose.model('activities');
+const ActivityInstance = mongoose.model('activityInstance');
 
 module.exports = (app, jsonParser) => {
+	app.post(
+		'/api/activity/instance',
+		jsonParser,
+		requireLogin,
+		async (req, res) => {
+			const { _user, _activity } = req.body;
+
+			// we want to check if an AcitivtyInstance with given user.id and activity.id
+			// exists in the DB.
+			ActivityInstance.count({ _user, _activity }, async function (
+				err,
+				count
+			) {
+				if (count == 0) {
+					console.log(
+						chalk.redBright(
+							'No activity instance exists with the given user and activity'
+						)
+					);
+				} else if (count > 1) {
+					console.log(
+						chalk.redBright(
+							'Error! Duplicate activity instance found!'
+						)
+					);
+				} else if (count == 1) {
+					try {
+						const activityInstance = await ActivityInstance.find({
+							_user,
+							_activity
+						});
+						res.send(activityInstance);
+					} catch (err) {
+						res.status(512).send(err);
+					}
+				}
+			});
+
+			// the given ActivityInstance DNE, make a new one
+
+			// Math.floor(Date.now() / 1000)
+
+			const activityInstance = new ActivityInstance({
+				_user,
+				_activity,
+				minutes: 0,
+				hours: 0,
+				startTime: 0
+			});
+
+			debugger
+			
+			try {
+				await activityInstance.save();
+				res.send(activityInstance);
+			} catch (err) {
+				res.status(512).send(err);
+			}
+		}
+	);
+
 	app.get('/api/activities', jsonParser, requireLogin, async (req, res) => {
 		// to get current user : req.user
 		const activities = await Activity.find({});
-
 		res.send(activities);
 	});
 
@@ -16,7 +77,6 @@ module.exports = (app, jsonParser) => {
 		jsonParser,
 		requireLogin,
 		async (req, res) => {
-			console.log(chalk.redBright('LOOK HERE! req'), req.body);
 			const { title, description } = req.body;
 
 			const activity = new Activity({

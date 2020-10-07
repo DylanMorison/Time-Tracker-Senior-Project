@@ -6,6 +6,7 @@ const passport = require('passport');
 const bodyParser = require('body-parser');
 require('./models/User');
 require('./models/Activity');
+require('./models/ActivityInstance');
 require('./services/passport');
 
 mongoose.Promise = global.Promise;

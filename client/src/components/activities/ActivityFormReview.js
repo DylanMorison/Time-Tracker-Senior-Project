@@ -1,5 +1,5 @@
 // activity for review shows users their form inputs for review
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import _ from 'lodash';
 import FIELDS from './formFields';

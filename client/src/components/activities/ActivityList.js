@@ -20,8 +20,6 @@ class ActivityList extends Component {
 						</p>
 					</div>
 					<div className="card-action">
-						<a>33,000</a>
-						<a>1,500</a>
 
 					</div>
 				</div>
