@@ -33,7 +33,7 @@ module.exports = (app, jsonParser) => {
 						});
 						res.send(activityInstance);
 					} catch (err) {
-						res.status(512).send(err);
+						res.status(500).send(err);
 					}
 				}
 			});
@@ -42,9 +42,12 @@ module.exports = (app, jsonParser) => {
 
 			// Math.floor(Date.now() / 1000)
 
+
+
+			debugger;
 			const activityInstance = new ActivityInstance({
-				_user: req.body.user._id,
-				_activity: req.body.activity._id,
+				_user: req.user.body.id,
+				_activity: req.activity.body.id,
 				minutes: 0,
 				hours: 0,
 				startTime: 0
@@ -54,7 +57,7 @@ module.exports = (app, jsonParser) => {
 				await activityInstance.save();
 				res.send(activityInstance);
 			} catch (err) {
-				res.status(512).send(err);
+				res.status(500).send(err);
 			}
 		}
 	);
@@ -76,14 +79,13 @@ module.exports = (app, jsonParser) => {
 				title,
 				description,
 				dateCreated: Date.now(),
-				_users: [req.user.id]
+				_user: req.user.id
 			});
-
 			try {
 				await activity.save();
 				res.send(activity);
 			} catch (err) {
-				res.status(522).send(err);
+				res.status(500).send(err);
 			}
 		}
 	);
