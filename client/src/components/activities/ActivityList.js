@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchActivities, createActivityInstance } from '../../actions';
 import { withRouter } from 'react-router-dom';
-
+import * as actions from '../../actions';
 
 class ActivityList extends Component {
 	componentDidMount() {
@@ -15,7 +15,13 @@ class ActivityList extends Component {
 				<div
 					className="card blue-grey darken-1"
 					key={activity._id}
-					onClick={() => createActivityInstance()}
+					onClick={() => {
+						this.props.createActivityInstance(
+							activity,
+							this.props.history
+						);
+						console.log('test');
+					}}
 				>
 					<div className="card-content">
 						<span className="card-title text-white">
@@ -29,7 +35,8 @@ class ActivityList extends Component {
 							).toLocaleDateString()}
 						</p>
 					</div>
-					<div className="card-action"></div>
+					<div className="card-action">
+					</div>
 				</div>
 			);
 		});

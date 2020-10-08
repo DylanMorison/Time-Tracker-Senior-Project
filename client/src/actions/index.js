@@ -12,14 +12,17 @@ export const fetchUser = () => async (dispatch) => {
 	dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const createActivityInstance = (values, history) => async (dispatch) => {
-	const res = await axios.post('/api/activity/instance', values);
+export const createActivityInstance = (activity, history) => async (
+	dispatch
+) => {
+	console.log('here we go!', activity);
+	const res = await axios.post('/api/activity/instance', activity);
 	history.push('/activities/activity/instance');
 	dispatch({ type: ACTIVITY_INSTANCE, payload: res.data });
 };
 
 export const submitActivity = (values, history) => async (dispatch) => {
-	console.log(values)
+	console.log(values);
 	const res = await axios.post('/api/activities/new', values);
 	history.push('/activities');
 	dispatch({ type: FETCH_USER, payload: res.data });

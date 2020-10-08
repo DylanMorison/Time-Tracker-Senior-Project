@@ -28,8 +28,8 @@ module.exports = (app, jsonParser) => {
 				} else if (count == 1) {
 					try {
 						const activityInstance = await ActivityInstance.find({
-							_user: req.body.user._id,
-							_activity: req.body.activity._id
+							_user: req.user.id,
+							_activity: req.body._id
 						});
 						res.send(activityInstance);
 					} catch (err) {
@@ -42,12 +42,10 @@ module.exports = (app, jsonParser) => {
 
 			// Math.floor(Date.now() / 1000)
 
-
-
 			debugger;
 			const activityInstance = new ActivityInstance({
-				_user: req.user.body.id,
-				_activity: req.activity.body.id,
+				_user: req.user.id,
+				_activity: req.body._id,
 				minutes: 0,
 				hours: 0,
 				startTime: 0
