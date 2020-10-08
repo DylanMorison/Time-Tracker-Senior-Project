@@ -10,14 +10,9 @@ module.exports = (app, jsonParser) => {
 		jsonParser,
 		requireLogin,
 		async (req, res) => {
-			const { _user, _activity } = req.body;
-
 			// we want to check if an AcitivtyInstance with given user.id and activity.id
 			// exists in the DB.
-			ActivityInstance.count({ _user, _activity }, async function (
-				err,
-				count
-			) {
+			ActivityInstance.count({ _id: '' }, async function (err, count) {
 				if (count == 0) {
 					console.log(
 						chalk.redBright(
@@ -33,8 +28,8 @@ module.exports = (app, jsonParser) => {
 				} else if (count == 1) {
 					try {
 						const activityInstance = await ActivityInstance.find({
-							_user,
-							_activity
+							_user: req.body.user._id,
+							_activity: req.body.activity._id
 						});
 						res.send(activityInstance);
 					} catch (err) {
@@ -48,15 +43,13 @@ module.exports = (app, jsonParser) => {
 			// Math.floor(Date.now() / 1000)
 
 			const activityInstance = new ActivityInstance({
-				_user,
-				_activity,
+				_user: req.body.user._id,
+				_activity: req.body.activity._id,
 				minutes: 0,
 				hours: 0,
 				startTime: 0
 			});
 
-			debugger
-			
 			try {
 				await activityInstance.save();
 				res.send(activityInstance);
@@ -83,8 +76,6 @@ module.exports = (app, jsonParser) => {
 				title,
 				description,
 				dateCreated: Date.now(),
-				minutes: 0,
-				hours: 0,
 				_users: [req.user.id]
 			});
 
@@ -92,7 +83,7 @@ module.exports = (app, jsonParser) => {
 				await activity.save();
 				res.send(activity);
 			} catch (err) {
-				res.status(422).send(err);
+				res.status(522).send(err);
 			}
 		}
 	);

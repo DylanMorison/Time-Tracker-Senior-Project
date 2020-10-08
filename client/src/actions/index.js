@@ -19,6 +19,7 @@ export const createActivityInstance = (values, history) => async (dispatch) => {
 };
 
 export const submitActivity = (values, history) => async (dispatch) => {
+	console.log(values)
 	const res = await axios.post('/api/activities/new', values);
 	history.push('/activities');
 	dispatch({ type: FETCH_USER, payload: res.data });
