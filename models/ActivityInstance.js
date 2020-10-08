@@ -3,8 +3,8 @@ const { Schema } = mongoose;
 
 
 const acitivtyInstanceSchema = new Schema({
-	_user: {type: Schema.Types.ObjectId, ref: 'users'},
-	_activity: {type: Schema.Types.ObjectId, ref: 'activities'},
+	user: String,
+	activityTitle: String,
 	minutes: { type: Number, min: 0, max: 60, default: 0 },
 	hours: { type: Number, default: 0 },
     startTime: Number

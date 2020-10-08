@@ -10,49 +10,31 @@ module.exports = (app, jsonParser) => {
 		jsonParser,
 		requireLogin,
 		async (req, res) => {
-			// we want to check if an AcitivtyInstance with given user.id and activity.id
-			// exists in the DB.
-			ActivityInstance.count({ _id: '' }, async function (err, count) {
-				if (count == 0) {
-					console.log(
-						chalk.redBright(
-							'No activity instance exists with the given user and activity'
-						)
-					);
-				} else if (count > 1) {
-					console.log(
-						chalk.redBright(
-							'Error! Duplicate activity instance found!'
-						)
-					);
-				} else if (count == 1) {
-					try {
-						const activityInstance = await ActivityInstance.find({
-							_user: req.user.id,
-							_activity: req.body._id
-						});
-						res.send(activityInstance);
-					} catch (err) {
-						res.status(500).send(err);
-					}
+			var activityInstance = false;
+			const user = req.user.id;
+			const activityTitle = req.body.title;
+
+			await ActivityInstance.findOne({ user, activityTitle }, function (
+				err,
+				data
+			) {
+				if (err) {
+					console.log(err);
 				}
+				activityInstance = data;
 			});
 
-			// the given ActivityInstance DNE, make a new one
-
-			// Math.floor(Date.now() / 1000)
-
-			debugger;
-			const activityInstance = new ActivityInstance({
-				_user: req.user.id,
-				_activity: req.body._id,
-				minutes: 0,
-				hours: 0,
-				startTime: 0
-			});
+			if (activityInstance == false) {
+				activityInstance = await new ActivityInstance({
+					user,
+					activityTitle,
+					minutes: 0,
+					hours: 0,
+					startTime: 0
+				}).save();
+			}
 
 			try {
-				await activityInstance.save();
 				res.send(activityInstance);
 			} catch (err) {
 				res.status(500).send(err);

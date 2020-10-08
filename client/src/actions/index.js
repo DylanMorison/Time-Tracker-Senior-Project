@@ -18,11 +18,11 @@ export const createActivityInstance = (activity, history) => async (
 	console.log('here we go!', activity);
 	const res = await axios.post('/api/activity/instance', activity);
 	history.push('/activities/activity/instance');
+	console.log(res.data);
 	dispatch({ type: ACTIVITY_INSTANCE, payload: res.data });
 };
 
 export const submitActivity = (values, history) => async (dispatch) => {
-	console.log(values);
 	const res = await axios.post('/api/activities/new', values);
 	history.push('/activities');
 	dispatch({ type: FETCH_USER, payload: res.data });
