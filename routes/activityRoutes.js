@@ -22,7 +22,7 @@ module.exports = (app, jsonParser) => {
 					console.log(err);
 				}
 				console.log(chalk.redBright(activityInstance));
-				debugger; 
+				debugger;
 				activityInstance = data;
 				console.log(chalk.greenBright('______________'));
 				console.log(chalk.redBright(activityInstance));
