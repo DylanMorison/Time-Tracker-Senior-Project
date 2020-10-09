@@ -10,7 +10,7 @@ module.exports = (app, jsonParser) => {
 		jsonParser,
 		requireLogin,
 		async (req, res) => {
-			var activityInstance = false;
+			var activityInstance = null;
 			const user = req.user.id;
 			const activityTitle = req.body.title;
 
@@ -21,10 +21,14 @@ module.exports = (app, jsonParser) => {
 				if (err) {
 					console.log(err);
 				}
+				console.log(chalk.redBright(activityInstance));
+				debugger; 
 				activityInstance = data;
+				console.log(chalk.greenBright('______________'));
+				console.log(chalk.redBright(activityInstance));
 			});
 
-			if (activityInstance == false) {
+			if (activityInstance === null) {
 				activityInstance = await new ActivityInstance({
 					user,
 					activityTitle,

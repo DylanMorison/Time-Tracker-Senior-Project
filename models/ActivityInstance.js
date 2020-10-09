@@ -1,13 +1,12 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-
 const acitivtyInstanceSchema = new Schema({
 	user: String,
-	activityTitle: String,
+	activityTitle: { type: String, unique: true },
 	minutes: { type: Number, min: 0, max: 60, default: 0 },
 	hours: { type: Number, default: 0 },
-    startTime: Number
+	startTime: Number
 });
 
-mongoose.model('activityInstance', acitivtyInstanceSchema)
+mongoose.model('activityInstance', acitivtyInstanceSchema);
