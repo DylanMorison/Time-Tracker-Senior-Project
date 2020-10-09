@@ -4,19 +4,29 @@ import { createActivityInstance } from '../../actions/index';
 
 class ActivitySession extends Component {
 	componentDidUpdate() {
-		console.log(this.props.activityInstance)
+		console.log(this.props.activityInstance);
 	}
 
-	renderSession(){
-		return(
-			<div>
-				
-			</div>
-		)
+	renderSession() {
+		// user: '',
+		// activityTitle: '',
+		// minutes: 0,
+		// hours: 0,
+		// startTime: 0
+
+		const { activityTitle, minutes, hours } = this.props.activityInstance;
+
+		return (
+			<ul className="collection with-header">
+				<li className="collection-header">{activityTitle}</li>
+				<li className="collection-item">hours: {hours}</li>
+				<li className="collection-item">minutes: {minutes}</li>
+			</ul>
+		);
 	}
 
 	render() {
-		return <div>ActivitySession</div>;
+		return <div>{this.renderSession()}</div>;
 	}
 }
 

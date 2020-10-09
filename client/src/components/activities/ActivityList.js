@@ -14,6 +14,7 @@ class ActivityList extends Component {
 			return (
 				<div
 					className="card blue-grey darken-1"
+					style={{ cursor: 'pointer' }}
 					key={activity._id}
 					onClick={() => {
 						this.props.createActivityInstance(
@@ -35,8 +36,7 @@ class ActivityList extends Component {
 							).toLocaleDateString()}
 						</p>
 					</div>
-					<div className="card-action">
-					</div>
+					<div className="card-action"></div>
 				</div>
 			);
 		});

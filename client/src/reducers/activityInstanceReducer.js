@@ -3,7 +3,7 @@ import { ACTIVITY_INSTANCE } from '../actions/types';
 const initialState = {
 	//Assuming these are the only values in response
 	user: '',
-	activityTitle: '',
+	activityTitle: 'Activity Title',
 	minutes: 0,
 	hours: 0,
 	startTime: 0
