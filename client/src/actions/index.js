@@ -15,10 +15,8 @@ export const fetchUser = () => async (dispatch) => {
 export const createActivityInstance = (activity, history) => async (
 	dispatch
 ) => {
-	console.log('here we go!', activity);
 	const res = await axios.post('/api/activity/instance', activity);
 	history.push('/activities/activity/instance');
-	console.log(res.data);
 	dispatch({ type: ACTIVITY_INSTANCE, payload: res.data });
 };
 

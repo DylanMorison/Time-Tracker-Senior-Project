@@ -1,12 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { createActivityInstance } from '../../actions/index';
 
 class ActivitySession extends Component {
-	state = { currentActivity: {} };
-
-	componentDidMount() {
-		this.setState({ currentActivity: this.props.activityInstance });
+	componentDidUpdate() {
 		console.log(this.props.activityInstance)
+	}
+
+	renderSession(){
+		return(
+			<div>
+				
+			</div>
+		)
 	}
 
 	render() {
@@ -15,7 +21,10 @@ class ActivitySession extends Component {
 }
 
 function mapStateToProps(state) {
+	console.log(state);
 	return { activityInstance: state.activityInstance };
 }
 
-export default connect(mapStateToProps)(ActivitySession);
+export default connect(mapStateToProps, { createActivityInstance })(
+	ActivitySession
+);
