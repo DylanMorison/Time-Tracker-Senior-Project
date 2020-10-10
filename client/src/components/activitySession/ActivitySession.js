@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { createActivityInstance } from '../../actions/index';
 
 class ActivitySession extends Component {
-	componentDidUpdate() {
-		console.log(this.props.activityInstance);
+	componentDidMount() {
+		const {activity} = this.props;
 	}
 
 	renderSession() {

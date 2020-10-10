@@ -4,17 +4,17 @@ const requireLogin = require('../middlewares/requireLogin');
 const Activity = mongoose.model('activities');
 const ActivityInstance = mongoose.model('activityInstance');
 
-const findActivityInstance = async (user, activityTitle) => {
-	await ActivityInstance.findOne({ user, activityTitle }, function (
-		err,
-		activityInstance
-	) {
-		if (err) {
-			console.log(chalk.greenBright('Hello Dylan'), err);
-		}
-		return activityInstance;
-	});
-};
+// const findActivityInstance = async (user, activityTitle) => {
+// 	await ActivityInstance.findOne({ user, activityTitle }, function (
+// 		err,
+// 		activityInstance
+// 	) {
+// 		if (err) {
+// 			console.log(chalk.greenBright('Hello Dylan'), err);
+// 		}
+// 		return activityInstance;
+// 	});
+// };
 
 module.exports = (app, jsonParser) => {
 	app.post(
@@ -25,27 +25,33 @@ module.exports = (app, jsonParser) => {
 			let activityInstance;
 			const user = req.user.id;
 			const activityTitle = req.body.title;
-			debugger;
+
 			activityInstance = await new ActivityInstance({
 				user,
 				activityTitle,
 				minutes: 0,
 				hours: 0,
 				startTime: 0
-			}).save(function (err) {
+			}).save(async function (err) {
 				if (err.name === 'MongoError' && err.code === 11000) {
-					activityInstance = findActivityInstance(
-						user,
-						activityTitle
+					activityInstance = await ActivityInstance.findOne(
+						{ user, activityTitle },
+						function (err, activityInstance) {
+							if (err) {
+								console.log(
+									chalk.greenBright('Hello Dylan'),
+									err
+								);
+							}
+							try {
+								res.send(activityInstance);
+							} catch (err) {
+								res.status(400).send(err);
+							}
+						}
 					);
 				}
 			});
-
-			try {
-				res.send(activityInstance);
-			} catch (err) {
-				res.status(500).send(err);
-			}
 		}
 	);
 
