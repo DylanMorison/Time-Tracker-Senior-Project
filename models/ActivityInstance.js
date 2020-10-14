@@ -4,9 +4,7 @@ const { Schema } = mongoose;
 const acitivtyInstanceSchema = new Schema({
 	user: String,
 	activityTitle: { type: String, unique: true },
-	minutes: { type: Number, min: 0, max: 60, default: 0 },
-	hours: { type: Number, default: 0 },
-	startTime: Number
+	minutes: { type: Number, min: 0, default: 0 },
 });
 
 mongoose.model('activityInstance', acitivtyInstanceSchema);

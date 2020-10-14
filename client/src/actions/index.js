@@ -12,11 +12,25 @@ export const fetchUser = () => async (dispatch) => {
 	dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const createActivityInstance = (activity, history) => async (
+export const updateActivityInstance = (activityInstance) => async (
+	dispatch
+) => {
+	const res = await axios.put(
+		'/api/activity/instance/update',
+		activityInstance
+	);
+	dispatch({ type: ACTIVITY_INSTANCE, payload: res.data });
+};
+
+export const createActivityInstance = (activity, history, pageRefresh) => async (
 	dispatch
 ) => {
 	const res = await axios.post('/api/activity/instance', activity);
-	history.push('/activities/activity/instance');
+
+	if (pageRefresh === false) {
+		history.push({ state: res.data });
+	} else history.push('/activities/activity/instance');
+
 	dispatch({ type: ACTIVITY_INSTANCE, payload: res.data });
 };
 

@@ -19,9 +19,9 @@ class ActivityList extends Component {
 					onClick={() => {
 						this.props.createActivityInstance(
 							activity,
-							this.props.history
+							this.props.history,
+							true
 						);
-						console.log('test');
 					}}
 				>
 					<div className="card-content">

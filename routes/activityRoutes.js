@@ -17,6 +17,31 @@ const ActivityInstance = mongoose.model('activityInstance');
 // };
 
 module.exports = (app, jsonParser) => {
+	app.put('/api/activity/instance/update', jsonParser, async (req, res) => {
+		const user = req.user.id;
+		const { activityTitle, minutes } = req.body;
+		const minutesInt = parseInt(minutes);
+
+		const filter = { activityTitle, user };
+		const update = { minutes: minutesInt };
+		const activityInstance = await ActivityInstance.findOneAndUpdate(
+			filter,
+			update,
+			{ new: true }
+		);
+
+		if (activityInstance !== null) {
+			console.log(activityInstance);
+			activityInstance.save();
+		}
+
+		try{
+			res.send(activityInstance);
+		} catch (err){
+			res.status(400).send(err);
+		}
+	});
+
 	app.post(
 		'/api/activity/instance',
 		jsonParser,
@@ -30,26 +55,27 @@ module.exports = (app, jsonParser) => {
 				user,
 				activityTitle,
 				minutes: 0,
-				hours: 0,
 				startTime: 0
 			}).save(async function (err) {
-				if (err.name === 'MongoError' && err.code === 11000) {
-					activityInstance = await ActivityInstance.findOne(
-						{ user, activityTitle },
-						function (err, activityInstance) {
-							if (err) {
-								console.log(
-									chalk.greenBright('Hello Dylan'),
-									err
-								);
+				if (err) {
+					if (err.name === 'MongoError' && err.code === 11000) {
+						activityInstance = await ActivityInstance.findOne(
+							{ user, activityTitle },
+							function (err, activityInstance) {
+								if (err) {
+									console.log(
+										chalk.greenBright('Hello Dylan'),
+										err
+									);
+								}
+								try {
+									res.send(activityInstance);
+								} catch (err) {
+									res.status(400).send(err);
+								}
 							}
-							try {
-								res.send(activityInstance);
-							} catch (err) {
-								res.status(400).send(err);
-							}
-						}
-					);
+						);
+					}
 				}
 			});
 		}

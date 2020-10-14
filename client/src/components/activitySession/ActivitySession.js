@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createActivityInstance } from '../../actions/index';
+import { withRouter } from 'react-router-dom';
+
+import StopWatch from './StopWatchV2';
 
 class ActivitySession extends Component {
 	componentDidMount() {
-		const {activity} = this.props;
+		let { activityTitle } = this.props.activityInstance;
+		if (activityTitle === 'Activity Title') {
+			this.props.history.push('/activities');
+		}
 	}
 
 	renderSession() {
-		// user: '',
-		// activityTitle: '',
-		// minutes: 0,
-		// hours: 0,
-		// startTime: 0
-
-		const { activityTitle, minutes, hours } = this.props.activityInstance;
-
+		const { activityTitle, minutes } = this.props.activityInstance;
+		const hours = Math.trunc(minutes / 60);
+		const tempMinutes = minutes % 60;
 		return (
-			<ul className="collection with-header">
-				<li className="collection-header">{activityTitle}</li>
-				<li className="collection-item">hours: {hours}</li>
-				<li className="collection-item">minutes: {minutes}</li>
-			</ul>
+			<>
+				<ul className="collection with-header">
+					<li className="collection-header">{activityTitle}</li>
+					<li className="collection-item">hours: {hours}</li>
+					<li className="collection-item">minutes: {tempMinutes}</li>
+					<li className="collection-item">
+						<StopWatch activityTitle={activityTitle} />
+					</li>
+				</ul>
+			</>
 		);
 	}
 
@@ -31,10 +37,9 @@ class ActivitySession extends Component {
 }
 
 function mapStateToProps(state) {
-	console.log(state);
 	return { activityInstance: state.activityInstance };
 }
 
 export default connect(mapStateToProps, { createActivityInstance })(
-	ActivitySession
+	withRouter(ActivitySession)
 );

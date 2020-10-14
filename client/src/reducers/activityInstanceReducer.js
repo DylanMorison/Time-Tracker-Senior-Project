@@ -16,7 +16,6 @@ const initialState = {
 //   startTime: Number
 
 export default function (state = initialState, action) {
-	console.log(action.payload)
 	switch (action.type) {
 		case ACTIVITY_INSTANCE:
 			return {
