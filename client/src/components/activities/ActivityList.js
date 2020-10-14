@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchActivities, createActivityInstance } from '../../actions';
 import { withRouter } from 'react-router-dom';
-import * as actions from '../../actions';
 
 class ActivityList extends Component {
 	componentDidMount() {

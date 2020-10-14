@@ -6,23 +6,23 @@ import { withRouter } from 'react-router-dom';
 import StopWatch from './StopWatchV2';
 
 class ActivitySession extends Component {
-	componentDidMount() {
-		let { activityTitle } = this.props.activityInstance;
-		if (activityTitle === 'Activity Title') {
-			this.props.history.push('/activities');
-		}
-	}
-
 	renderSession() {
 		const { activityTitle, minutes } = this.props.activityInstance;
+
 		const hours = Math.trunc(minutes / 60);
 		const tempMinutes = minutes % 60;
+		let hoursText;
+		let minutesText;
+
+		hours===1 ? hoursText = "hour" : hoursText = "hours"
+		tempMinutes===1 ? minutesText = "minute" : minutesText = "minutes"
+
 		return (
 			<>
 				<ul className="collection with-header">
 					<li className="collection-header">{activityTitle}</li>
-					<li className="collection-item">hours: {hours}</li>
-					<li className="collection-item">minutes: {tempMinutes}</li>
+					<li className="collection-item">{hoursText}: {hours}</li>
+					<li className="collection-item">{minutesText}: {tempMinutes}</li>
 					<li className="collection-item">
 						<StopWatch activityTitle={activityTitle} />
 					</li>

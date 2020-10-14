@@ -22,14 +22,20 @@ export const updateActivityInstance = (activityInstance) => async (
 	dispatch({ type: ACTIVITY_INSTANCE, payload: res.data });
 };
 
-export const createActivityInstance = (activity, history, pageRefresh) => async (
-	dispatch
-) => {
+export const createActivityInstance = (
+	activity,
+	history,
+	pageRefresh
+) => async (dispatch) => {
 	const res = await axios.post('/api/activity/instance', activity);
 
 	if (pageRefresh === false) {
-		history.push({ state: res.data });
-	} else history.push('/activities/activity/instance');
+		history.push({ retrievedActivityInstance: res.data });
+	} else
+		history.push({
+			pathname: '/activities/activity/instance',
+			state: { comeFromListBool: true }
+		});
 
 	dispatch({ type: ACTIVITY_INSTANCE, payload: res.data });
 };

@@ -4,18 +4,6 @@ const requireLogin = require('../middlewares/requireLogin');
 const Activity = mongoose.model('activities');
 const ActivityInstance = mongoose.model('activityInstance');
 
-// const findActivityInstance = async (user, activityTitle) => {
-// 	await ActivityInstance.findOne({ user, activityTitle }, function (
-// 		err,
-// 		activityInstance
-// 	) {
-// 		if (err) {
-// 			console.log(chalk.greenBright('Hello Dylan'), err);
-// 		}
-// 		return activityInstance;
-// 	});
-// };
-
 module.exports = (app, jsonParser) => {
 	app.put('/api/activity/instance/update', jsonParser, async (req, res) => {
 		const user = req.user.id;
