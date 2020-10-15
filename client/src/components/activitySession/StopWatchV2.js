@@ -11,8 +11,12 @@ class Stopwatch extends Component {
 		tempMinutes: 0
 	};
 
-	componentDidMount(){
-		this.startTimer()
+	componentDidMount() {
+		this.mounted = true;
+		this.startTimer();
+	}
+	componentWillUnmount() {
+		this.mounted = false;
 	}
 
 	startTimer = () => {
@@ -22,16 +26,18 @@ class Stopwatch extends Component {
 			timerStart: Date.now() - this.state.timerTime
 		});
 		this.timer = setInterval(() => {
-			this.setState({
-				timerTime: Date.now() - this.state.timerStart
-			});
+			if (this.mounted) {
+				this.setState({
+					timerTime: Date.now() - this.state.timerStart
+				});
+			}
 		}, 10);
 	};
 
-	stopTimer = () => {
-		this.setState({ timerOn: false });
-		clearInterval(this.timer);
-	};
+	// stopTimer = () => {
+	// 	this.setState({ timerOn: false });
+	// 	clearInterval(this.timer);
+	// };
 	// resetTimer = () => {
 	// 	this.setState({
 	// 		timerStart: 0,
@@ -53,9 +59,11 @@ class Stopwatch extends Component {
 		let minutes = ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2);
 		let hours = ('0' + Math.floor(timerTime / 3600000)).slice(-2);
 
-		if (parseInt(minutes) !== this.state.tempMinutes){
-			this.setState({tempMinutes: parseInt(minutes)});
-			this.updateSession();
+		if (parseInt(minutes) !== this.state.tempMinutes) {
+			if (this.mounted) {
+				this.setState({ tempMinutes: parseInt(minutes) });
+				this.updateSession();
+			}
 		}
 
 		return (

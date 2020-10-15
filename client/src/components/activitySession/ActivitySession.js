@@ -6,6 +6,16 @@ import { withRouter } from 'react-router-dom';
 import StopWatch from './StopWatchV2';
 
 class ActivitySession extends Component {
+	componentDidMount() {
+		setTimeout(() => {
+			if (
+				this.props.activityInstance.activityTitle === 'Activity Title'
+			) {
+				this.props.history.push('/activities');
+			}
+		}, 10);
+	}
+
 	renderSession() {
 		const { activityTitle, minutes } = this.props.activityInstance;
 
@@ -14,17 +24,26 @@ class ActivitySession extends Component {
 		let hoursText;
 		let minutesText;
 
-		hours===1 ? hoursText = "hour" : hoursText = "hours"
-		tempMinutes===1 ? minutesText = "minute" : minutesText = "minutes"
+		hours === 1 ? (hoursText = 'hour') : (hoursText = 'hours');
+		tempMinutes === 1
+			? (minutesText = 'minute')
+			: (minutesText = 'minutes');
 
 		return (
 			<>
 				<ul className="collection with-header">
 					<li className="collection-header">{activityTitle}</li>
-					<li className="collection-item">{hoursText}: {hours}</li>
-					<li className="collection-item">{minutesText}: {tempMinutes}</li>
 					<li className="collection-item">
-						<StopWatch activityTitle={activityTitle} />
+						{hoursText}: {hours}
+					</li>
+					<li className="collection-item">
+						{minutesText}: {tempMinutes}
+					</li>
+					<li className="collection-item">
+						<StopWatch
+							activityTitle={activityTitle}
+							mounted={this.mounted}
+						/>
 					</li>
 				</ul>
 			</>
