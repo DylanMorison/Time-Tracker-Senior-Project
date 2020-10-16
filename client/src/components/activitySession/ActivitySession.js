@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { createActivityInstance } from '../../actions/index';
 import { withRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import StopWatch from './StopWatchV2';
 
@@ -46,9 +47,19 @@ class ActivitySession extends Component {
 						/>
 					</li>
 				</ul>
+				<Link
+					to="/activities"
+					className="waves-effect waves-light btn-large"
+				>
+					<i class="material-icons right">done</i>Done Studying!
+				</Link>
 			</>
 		);
 	}
+
+	// 	<Link to="/activities/new" className="btn-floating btn-large red">
+	// 	<i className="material-icons">add</i>
+	// </Link>
 
 	render() {
 		return <div>{this.renderSession()}</div>;
