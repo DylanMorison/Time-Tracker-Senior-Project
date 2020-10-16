@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const acitivtyInstanceSchema = new Schema({
 	user: String,
-	activityTitle: { type: String, unique: true },
+	activityTitle: String,
 	minutes: { type: Number, min: 0, default: 0 },
 });
 
