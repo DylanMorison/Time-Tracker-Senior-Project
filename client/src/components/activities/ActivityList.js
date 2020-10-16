@@ -8,11 +8,6 @@ class ActivityList extends Component {
 
 	componentDidMount() {
 		this.props.fetchActivities();
-		// this.props.activities.forEach((activity) => {
-		// 	this.setState({
-		// 		activityTitles: [...this.state.activityTitles, activity.title]
-		// 	});
-		// });
 	}
 
 	dynamicSearch = () => {
@@ -26,7 +21,7 @@ class ActivityList extends Component {
 			if (!activity.title.toLowerCase().includes(this.state.term.toLowerCase())){
 				return false
 			}
-			
+
 			return (
 				<div className="card" key={activity.title}>
 					<div
@@ -65,7 +60,6 @@ class ActivityList extends Component {
 	}
 
 	render() {
-		console.log(this.state.activityTitles);
 		return (
 			<div>
 				<form className="ui form">
