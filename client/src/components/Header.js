@@ -30,7 +30,7 @@ class Header extends Component {
 						to={this.props.auth ? '/activities' : '/'}
 						className="left brand-logo"
 					>
-						TimeTracker
+						Activities
 					</Link>
 					<ul className="right">{this.renderContent()}</ul>
 				</div>

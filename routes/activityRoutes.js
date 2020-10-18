@@ -10,7 +10,7 @@ module.exports = (app, jsonParser) => {
 		const activity = req.body.activity;
 		const { minutes, title, description } = req.body;
 
-		const filter = { user, activity, title, description  };
+		const filter = { user, activity, title, description };
 		const update = { minutes };
 
 		const activityInstance = await ActivityInstance.findOneAndUpdate(
@@ -36,47 +36,32 @@ module.exports = (app, jsonParser) => {
 		jsonParser,
 		requireLogin,
 		async (req, res) => {
-			let activityInstance;
 			const user = req.user.id;
 			const activity = req.body._id;
 			const { title, description } = req.body;
-		
+			try {
+				let activityInstance = await ActivityInstance.findOne({
+					user,
+					activity
+				});
 
-			activityInstance = await new ActivityInstance({
-				user,
-				activity,
-				title,
-				description,
-				minutes: 0,
-				startTime: 0
-			}).save(async function (err) {
-				if (err) {
-					if (err.name === 'MongoError' && err.code === 11000) {
-						activityInstance = await ActivityInstance.findOne(
-							{ user, activity },
-							function (err, activityInstance) {
-								if (err) {
-									console.log(
-										chalk.greenBright('Hello Dylan'),
-										err
-									);
-								}
-								try {
-									res.send(activityInstance);
-								} catch (err) {
-									res.status(400).send(err);
-								}
-							}
-						);
-					}
-				} else if (typeof error == null) {
-					try {
-						res.send(activityInstance);
-					} catch (err) {
-						res.status(400).send(err);
-					}
+				if (activityInstance) {
+					res.send(activityInstance);
+					return;
 				}
-			});
+
+				activityInstance = await new ActivityInstance({
+					user,
+					activity,
+					title,
+					description,
+					minutes: 0
+				}).save();
+
+				res.send(activityInstance);
+			} catch (err) {
+				res.status(500).send('Server error');
+			}
 		}
 	);
 
