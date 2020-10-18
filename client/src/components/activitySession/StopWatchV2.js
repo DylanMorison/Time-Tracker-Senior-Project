@@ -7,7 +7,7 @@ class Stopwatch extends Component {
 		timerOn: false,
 		timerStart: 0,
 		timerTime: 0,
-		activityTitle: this.props.activityTitle,
+		title: this.props.title,
 		tempMinutes: 0
 	};
 
@@ -46,6 +46,7 @@ class Stopwatch extends Component {
 	// };
 
 	updateSession = () => {
+		debugger;
 		console.log('Updating Document!');
 		const { activityInstance } = this.props;
 		activityInstance.minutes += 1;
@@ -58,6 +59,8 @@ class Stopwatch extends Component {
 		let seconds = ('0' + (Math.floor(timerTime / 1000) % 60)).slice(-2);
 		let minutes = ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2);
 		let hours = ('0' + Math.floor(timerTime / 3600000)).slice(-2);
+
+
 
 		if (parseInt(minutes) !== this.state.tempMinutes) {
 			if (this.mounted) {

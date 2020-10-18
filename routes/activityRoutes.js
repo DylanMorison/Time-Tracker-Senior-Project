@@ -7,11 +7,12 @@ const ActivityInstance = mongoose.model('activityInstance');
 module.exports = (app, jsonParser) => {
 	app.put('/api/activity/instance/update', jsonParser, async (req, res) => {
 		const user = req.user.id;
-		const { activityTitle, minutes } = req.body;
-		const minutesInt = parseInt(minutes);
+		const activity = req.body.activity;
+		const { minutes, title, description } = req.body;
 
-		const filter = { activityTitle, user };
-		const update = { minutes: minutesInt };
+		const filter = { user, activity, title, description  };
+		const update = { minutes };
+
 		const activityInstance = await ActivityInstance.findOneAndUpdate(
 			filter,
 			update,
@@ -23,9 +24,9 @@ module.exports = (app, jsonParser) => {
 			activityInstance.save();
 		}
 
-		try{
+		try {
 			res.send(activityInstance);
-		} catch (err){
+		} catch (err) {
 			res.status(400).send(err);
 		}
 	});
@@ -37,18 +38,22 @@ module.exports = (app, jsonParser) => {
 		async (req, res) => {
 			let activityInstance;
 			const user = req.user.id;
-			const activityTitle = req.body.title;
+			const activity = req.body._id;
+			const { title, description } = req.body;
+		
 
 			activityInstance = await new ActivityInstance({
 				user,
-				activityTitle,
+				activity,
+				title,
+				description,
 				minutes: 0,
 				startTime: 0
 			}).save(async function (err) {
 				if (err) {
 					if (err.name === 'MongoError' && err.code === 11000) {
 						activityInstance = await ActivityInstance.findOne(
-							{ user, activityTitle },
+							{ user, activity },
 							function (err, activityInstance) {
 								if (err) {
 									console.log(
@@ -63,6 +68,12 @@ module.exports = (app, jsonParser) => {
 								}
 							}
 						);
+					}
+				} else if (typeof error == null) {
+					try {
+						res.send(activityInstance);
+					} catch (err) {
+						res.status(400).send(err);
 					}
 				}
 			});

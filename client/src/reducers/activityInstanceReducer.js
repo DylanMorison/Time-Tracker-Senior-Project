@@ -2,10 +2,10 @@ import { ACTIVITY_INSTANCE } from '../actions/types';
 
 const initialState = {
 	user: '',
-	activityTitle: 'Activity Title',
+	activity: '',
+	title: 'Activity Title',
+	description: "activity description",
 	minutes: 0,
-	hours: 0,
-	startTime: 0
 };
 
 
@@ -14,9 +14,10 @@ export default function (state = initialState, action) {
 		case ACTIVITY_INSTANCE:
 				state = {...state,
 					user: action.payload.user,
-					activityTitle: action.payload.activityTitle,
+					activity: action.payload.activity,
+					title: action.payload.title,
+					description: action.payload.description,
 					minutes: action.payload.minutes,
-					startTime: 0
 				};
 			return state;
 		default:

@@ -9,16 +9,16 @@ import StopWatch from './StopWatchV2';
 class ActivitySession extends Component {
 	componentDidMount() {
 		setTimeout(() => {
-			if (
-				this.props.activityInstance.activityTitle === 'Activity Title'
-			) {
+			if (this.props.activityInstance.title === 'Activity Title') {
 				this.props.history.push('/activities');
 			}
 		}, 10);
 	}
 
 	renderSession() {
-		const { activityTitle, minutes } = this.props.activityInstance;
+		const { title, minutes } = this.props.activityInstance;
+		console.log(title);
+
 
 		const hours = Math.trunc(minutes / 60);
 		const tempMinutes = minutes % 60;
@@ -29,11 +29,10 @@ class ActivitySession extends Component {
 		tempMinutes === 1
 			? (minutesText = 'minute')
 			: (minutesText = 'minutes');
-
 		return (
 			<>
 				<ul className="collection with-header">
-					<li className="collection-header">{activityTitle}</li>
+					<li className="collection-header">{title}</li>
 					<li className="collection-item">
 						{hoursText}: {hours}
 					</li>
@@ -41,17 +40,14 @@ class ActivitySession extends Component {
 						{minutesText}: {tempMinutes}
 					</li>
 					<li className="collection-item">
-						<StopWatch
-							activityTitle={activityTitle}
-							mounted={this.mounted}
-						/>
+						<StopWatch title={title} mounted={this.mounted} />
 					</li>
 				</ul>
 				<Link
 					to="/activities"
 					className="waves-effect waves-light btn-large"
 				>
-					<i class="material-icons right">done</i>Done Studying!
+					<i className="material-icons right">done</i>Done Studying!
 				</Link>
 			</>
 		);

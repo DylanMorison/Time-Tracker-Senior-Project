@@ -5,7 +5,11 @@ const activitySchema = new Schema({
 	title: { type: String, lowercase: true },
 	description: String,
 	dateCreated: { type: Date, default: Date.now() },
-	_user: [String]
+	users: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'users'
+		}
+	]
 });
 mongoose.model('activities', activitySchema);
-module.exports = activitySchema;

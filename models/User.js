@@ -14,4 +14,3 @@ const userSchema = new Schema({
 // if our app boots up and theres already a users collection mongoose
 // will make sure userSchema matches up with our db users collection
 mongoose.model('users', userSchema);
-module.exports = userSchema;

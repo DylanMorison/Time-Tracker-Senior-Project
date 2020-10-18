@@ -39,9 +39,9 @@ passport.use(
 			// user document where googleID === profile.id
 			// Anytime we reach out to our mongo DB for anyone reason we are
 			// Initiating an async action. It will consequently return a promise.
-
 			// ( TL:DR This is a query that returns a promise)
 			const existingUser = await User.findOne({ googleID: profile.id });
+			
 			if (existingUser) {
 				// we already have a record with given googleID
 				// we are all finsihed, here is the user we found!
