@@ -9,6 +9,7 @@
 	border: none;
 	cursor: pointer;
 	white-space: nowrap;
+	margin-top: 25px;
 }
 
 .btn--primary {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { GiSandsOfTime } from 'react-icons/gi';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { Button } from './buttons/Button';
+import { Button } from '../buttons/Button';
 import './Navbar.css';
 import { IconContext } from 'react-icons/lib';
 import { connect } from 'react-redux';

@@ -14,11 +14,11 @@ import * as actions from '../actions';
 
 import Navbar from './navbar/Navbar'
 import Header from './Header';
-import Landing from './Landing';
+import Home from './homePage/Home';
 import Dashboard from './Dashboard';
 import ActivityNew from './activities/ActivityNew';
 import ActivitySession from './activitySession/ActivitySession';
-
+import "./App.css";
 // BrowserRouter expects to only get one child/div
 class App extends Component {
 	componentDidMount() {
@@ -30,7 +30,7 @@ class App extends Component {
 			<BrowserRouter>
 				<div className="container">
 					<Navbar />
-					<Route exact path="/" component={Landing} />
+					<Route exact path="/" component={Home} />
 					<Route exact path="/activities" component={Dashboard} />
 					<Route
 						exact
