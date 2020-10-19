@@ -12,12 +12,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
+import Navbar from './navbar/Navbar'
 import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import ActivityNew from './activities/ActivityNew';
 import ActivitySession from './activitySession/ActivitySession';
-
 
 // BrowserRouter expects to only get one child/div
 class App extends Component {
@@ -27,20 +27,20 @@ class App extends Component {
 
 	render() {
 		return (
-				<BrowserRouter>
-					<div className="container">
-						<Header />
-						<Route exact path="/" component={Landing} />
-						<Route exact path="/activities" component={Dashboard} />
-						<Route exact path="/activities/activity/instance" component={ActivitySession} />
+			<BrowserRouter>
+				<div className="container">
+					<Navbar />
+					<Route exact path="/" component={Landing} />
+					<Route exact path="/activities" component={Dashboard} />
+					<Route
+						exact
+						path="/activities/activity/instance"
+						component={ActivitySession}
+					/>
 
-						<Route
-							path="/activities/new"
-							component={ActivityNew}
-						/>
-					</div>
-				</BrowserRouter>
-
+					<Route path="/activities/new" component={ActivityNew} />
+				</div>
+			</BrowserRouter>
 		);
 	}
 }
