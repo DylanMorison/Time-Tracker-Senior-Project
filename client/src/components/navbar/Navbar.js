@@ -100,7 +100,11 @@ class Navbar extends Component {
 								</li>
 								<li className="nav-item">
 									<Link
-										to="/activities"
+										to={
+											this.props.auth
+												? '/activities'
+												: '/'
+										}
 										className="nav-links"
 										onClick={this.closeMobileMenu}
 									>

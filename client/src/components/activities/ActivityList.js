@@ -8,6 +8,7 @@ class ActivityList extends Component {
 
 	componentDidMount() {
 		this.props.fetchActivities();
+
 	}
 
 	dynamicSearch = () => {
@@ -18,8 +19,12 @@ class ActivityList extends Component {
 
 	renderActivities() {
 		return this.props.activities.map((activity) => {
-			if (!activity.title.toLowerCase().includes(this.state.term.toLowerCase())){
-				return false
+			if (
+				!activity.title
+					.toLowerCase()
+					.includes(this.state.term.toLowerCase())
+			) {
+				return false;
 			}
 
 			return (
