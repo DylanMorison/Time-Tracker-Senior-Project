@@ -28,14 +28,16 @@ class ActivityList extends Component {
 		let index = 0;
 		let arrayLength = this.props.activities.length;
 		let tempArray = [];
+		let chunkSize;
+		if (arrayLength % 2 === 0) {
+			chunkSize = 4;
+		} else {
+			chunkSize = 3;
+		}
 
-		for (index = 0; index < arrayLength; index += 4) {
+		for (index = 0; index < arrayLength; index += chunkSize) {
 			let myChunk = this.props.activities.slice(index, index + 4);
-			if (myChunk.length !== 1) {
-				tempArray.push(myChunk);
-			} else {
-				tempArray[tempArray.length - 1].push(myChunk[0]);
-			}
+			tempArray.push(myChunk);
 		}
 
 		return tempArray;

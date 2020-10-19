@@ -82,7 +82,7 @@ module.exports = (app, jsonParser) => {
 				title,
 				description,
 				dateCreated: Date.now(),
-				_user: req.user.id
+				user: [req.user.id]
 			});
 			try {
 				await activity.save();
