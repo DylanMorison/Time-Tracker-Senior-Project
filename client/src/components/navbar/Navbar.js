@@ -123,6 +123,7 @@ class Navbar extends Component {
 								<li className="nav-item">
 									{this.renderContent()}
 								</li>
+								
 							</ul>
 						</div>
 					</div>
