@@ -29,6 +29,7 @@ class ActivityList extends Component {
 		let arrayLength = this.props.activities.length;
 		let tempArray = [];
 		let chunkSize;
+
 		if (arrayLength % 2 === 0) {
 			chunkSize = 4;
 		} else {
@@ -36,7 +37,7 @@ class ActivityList extends Component {
 		}
 
 		for (index = 0; index < arrayLength; index += chunkSize) {
-			let myChunk = this.props.activities.slice(index, index + 4);
+			let myChunk = this.props.activities.slice(index, index + chunkSize);
 			tempArray.push(myChunk);
 		}
 
@@ -91,6 +92,7 @@ class ActivityList extends Component {
 
 	render() {
 		let activitiesSplit = this.returnSplitActivityList();
+		console.log(this.props.activities.length);
 		return (
 			<div>
 				<Form.Group>
