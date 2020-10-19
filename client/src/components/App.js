@@ -13,7 +13,6 @@ import { connect } from 'react-redux';
 import * as actions from '../actions';
 
 import Navbar from './navbar/Navbar'
-import Header from './Header';
 import Home from './homePage/Home';
 import Dashboard from './Dashboard';
 import ActivityNew from './activities/ActivityNew';
