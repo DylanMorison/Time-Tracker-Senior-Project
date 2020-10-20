@@ -1,6 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateActivityInstance } from '../../actions/index';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
 class Stopwatch extends Component {
 	state = {
@@ -46,21 +53,24 @@ class Stopwatch extends Component {
 	// };
 
 	updateSession = () => {
-		debugger;
-		console.log('Updating Document!');
 		const { activityInstance } = this.props;
 		activityInstance.minutes += 1;
 		this.props.updateActivityInstance(activityInstance);
 	};
 
 	render() {
+		// let { title, totalActivityMinutes, description } = this.props.activityInstance;
+
+		// const hours = Math.trunc(totalActivityMinutes / 60);
+		// const tempMinutes = minutes % 60;
+		// let hoursText;
+		// let minutesText;
+
 		const { timerTime } = this.state;
 		let centiseconds = ('0' + (Math.floor(timerTime / 10) % 100)).slice(-2);
 		let seconds = ('0' + (Math.floor(timerTime / 1000) % 60)).slice(-2);
 		let minutes = ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2);
 		let hours = ('0' + Math.floor(timerTime / 3600000)).slice(-2);
-
-
 
 		if (parseInt(minutes) !== this.state.tempMinutes) {
 			if (this.mounted) {
@@ -68,23 +78,94 @@ class Stopwatch extends Component {
 				this.updateSession();
 			}
 		}
+		let secondsPercentage = Math.trunc((seconds / 60) * 100);
+		let minutesPercentage = Math.trunc((minutes / 60) * 100);
 
 		return (
-			<div className="Stopwatch-display">
-				{/* {this.state.timerOn === false && this.state.timerTime === 0 && (
-					<button onClick={this.startTimer}>Start</button>
-				)}
-				{this.state.timerOn === true && (
-					<button onClick={this.stopTimer}>Stop</button>
-				)}
-				{this.state.timerOn === false && this.state.timerTime > 0 && (
-					<button onClick={this.startTimer}>Resume</button>
-				)}
-				{this.state.timerOn === false && this.state.timerTime > 0 && (
-					<button onClick={this.resetTimer}>Reset</button>
-				)} */}
-				{hours} : {minutes} : {seconds} : {centiseconds}
-			</div>
+			<>
+				<Container>
+					<Jumbotron
+						style={{
+							textAlign: 'center',
+							margin: '3%'
+						}}
+					>
+						<h1>{this.props.activityInstance.title}</h1>
+						<h3>{this.props.activityInstance.description}</h3>
+					</Jumbotron>
+					<Jumbotron
+						style={{
+							textAlign: 'center',
+							margin: '5%'
+						}}
+					>
+						<Row>
+							<Col sm={12}>
+								<h1>Global Time</h1>
+							</Col>
+						</Row>
+						<Row>
+							<Col sm={6} style={{ textSizeAdjust: '10px' }}>
+								<CircularProgressbar
+									value={this.props.activityMinutes}
+									text={`${parseInt(
+										this.props.activityMinutes
+									)} total mins`}
+									styles={buildStyles({
+										textSize: '12px'
+									})}
+								/>
+							</Col>
+							<Col sm={6}>
+								<CircularProgressbar
+									value={this.props.activityHours}
+									text={`${this.props.activityHours} total hours`}
+									styles={buildStyles({
+										textSize: '12px'
+									})}
+								/>
+							</Col>
+						</Row>
+					</Jumbotron>
+
+					<Jumbotron
+						style={{
+							textAlign: 'center',
+							margin: '10%'
+						}}
+					>
+						<Row
+							style={{
+								marginBottom: '3%'
+							}}
+						>
+							<Col sm={12}>
+								<h1>Current Time</h1>
+							</Col>
+						</Row>
+						<Row>
+							<Col sm={4}>
+								<CircularProgressbar
+									value={secondsPercentage}
+									text={`${parseInt(seconds)} sec`}
+								/>
+							</Col>
+							<Col sm={4}>
+								<CircularProgressbar
+									value={minutesPercentage}
+									text={`${parseInt(minutes)} min`}
+								/>
+							</Col>
+							<Col sm={4}>
+								<CircularProgressbar
+									value={hours}
+									text={`${parseInt(hours)} hours`}
+								/>
+							</Col>
+						</Row>
+					</Jumbotron>
+				</Container>
+			</>
 		);
 	}
 }

@@ -3,6 +3,11 @@ import { connect } from 'react-redux';
 import { createActivityInstance } from '../../actions/index';
 import { withRouter } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 import StopWatch from './StopWatchV2';
 
@@ -16,46 +21,27 @@ class ActivitySession extends Component {
 	}
 
 	renderSession() {
-		const { title, minutes } = this.props.activityInstance;
-		console.log(title);
-
+		const { minutes } = this.props.activityInstance;
 
 		const hours = Math.trunc(minutes / 60);
 		const tempMinutes = minutes % 60;
-		let hoursText;
-		let minutesText;
+		// let hoursText;
+		// let minutesText;
 
-		hours === 1 ? (hoursText = 'hour') : (hoursText = 'hours');
-		tempMinutes === 1
-			? (minutesText = 'minute')
-			: (minutesText = 'minutes');
+		// hours === 1 ? (hoursText = 'hour') : (hoursText = 'hours');
+		// tempMinutes === 1
+		// 	? (minutesText = 'minute')
+		// 	: (minutesText = 'minutes');
 		return (
 			<>
-				<ul className="collection with-header">
-					<li className="collection-header">{title}</li>
-					<li className="collection-item">
-						{hoursText}: {hours}
-					</li>
-					<li className="collection-item">
-						{minutesText}: {tempMinutes}
-					</li>
-					<li className="collection-item">
-						<StopWatch title={title} mounted={this.mounted} />
-					</li>
-				</ul>
-				<Link
-					to="/activities"
-					className="waves-effect waves-light btn-large"
-				>
-					<i className="material-icons right">done</i>Done Studying!
-				</Link>
+				<StopWatch
+					mounted={this.mounted}
+					activityMinutes={tempMinutes}
+					activityHours={hours}
+				/>
 			</>
 		);
 	}
-
-	// 	<Link to="/activities/new" className="btn-floating btn-large red">
-	// 	<i className="material-icons">add</i>
-	// </Link>
 
 	render() {
 		return <div>{this.renderSession()}</div>;

@@ -12,17 +12,16 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 
-import Navbar from './navbar/Navbar'
+import Navbar from './navbar/Navbar';
 import Home from './homePage/Home';
 import Dashboard from './Dashboard';
 import ActivityNew from './activities/ActivityNew';
 import ActivitySession from './activitySession/ActivitySession';
-import "./App.css";
+import './App.css';
 // BrowserRouter expects to only get one child/div
 class App extends Component {
 	componentDidMount() {
 		this.props.fetchUser();
-		
 	}
 
 	render() {
