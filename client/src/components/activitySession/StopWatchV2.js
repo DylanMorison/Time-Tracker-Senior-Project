@@ -110,7 +110,7 @@ class Stopwatch extends Component {
 									value={this.props.activityMinutes}
 									text={`${parseInt(
 										this.props.activityMinutes
-									)} total mins`}
+									)} ${this.props.minutesText}`}
 									styles={buildStyles({
 										textSize: '12px'
 									})}
@@ -119,7 +119,7 @@ class Stopwatch extends Component {
 							<Col sm={6}>
 								<CircularProgressbar
 									value={this.props.activityHours}
-									text={`${this.props.activityHours} total hours`}
+									text={`${this.props.activityHours} ${this.props.hoursText}`}
 									styles={buildStyles({
 										textSize: '12px'
 									})}

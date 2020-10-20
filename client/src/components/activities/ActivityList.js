@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchActivities, createActivityInstance } from '../../actions';
+import {
+	fetchActivitiesPublic,
+	fetchActivitiesPrivate,
+	createActivityInstance
+} from '../../actions';
 import { withRouter } from 'react-router-dom';
 
 import CardDeck from 'react-bootstrap/CardDeck';
@@ -12,10 +16,16 @@ import { FiUsers } from 'react-icons/fi';
 import './ActivityList.css';
 
 class ActivityList extends Component {
-	state = { term: '', activityTitles: [] };
+	state = {
+		term: '',
+		activityTitles: [],
+		private: true,
+		checkString: 'Private Activities'
+	};
 
 	componentDidMount() {
-		this.props.fetchActivities();
+		this.props.fetchActivitiesPublic();
+		this.props.fetchActivitiesPrivate();
 	}
 
 	dynamicSearch = () => {
@@ -25,19 +35,32 @@ class ActivityList extends Component {
 	};
 
 	returnSplitActivityList = () => {
+		// this is where we check if we should use
+		// public activities or private activities
+
+		let activities;
+		let numActivities;
+
+		if (this.state.private) {
+			activities = this.props.privateActivities;
+			numActivities = activities.length;
+		} else {
+			activities = this.props.publicActivities;
+			numActivities = activities.length;
+		}
+
 		let index = 0;
-		let arrayLength = this.props.activities.length;
 		let tempArray = [];
 		let chunkSize;
 
-		if (arrayLength % 2 === 0) {
+		if (numActivities % 2 === 0) {
 			chunkSize = 4;
 		} else {
 			chunkSize = 3;
 		}
 
-		for (index = 0; index < arrayLength; index += chunkSize) {
-			let myChunk = this.props.activities.slice(index, index + chunkSize);
+		for (index = 0; index < numActivities; index += chunkSize) {
+			let myChunk = activities.slice(index, index + chunkSize);
 			tempArray.push(myChunk);
 		}
 
@@ -61,7 +84,7 @@ class ActivityList extends Component {
 					key={activity.title}
 				>
 					<Card.Body
-						style={{ cursor: 'pointer' }}
+						style={{ cursor: 'pointer', textAlign: 'center' }}
 						onClick={() => {
 							this.props.createActivityInstance(
 								activity,
@@ -90,9 +113,17 @@ class ActivityList extends Component {
 		);
 	};
 
+	toggleEnabled = () => {
+		if (this.state.private) {
+			this.setState({ private: false, checkString: 'Public Activities' });
+		} else {
+			this.setState({ private: true, checkString: 'Private Activities' });
+		}
+	};
+
 	render() {
 		let activitiesSplit = this.returnSplitActivityList();
-		console.log(this.props.activities.length);
+
 		return (
 			<div>
 				<Form.Group>
@@ -105,7 +136,14 @@ class ActivityList extends Component {
 							this.setState({ term: e.target.value })
 						}
 					/>
-					<br />
+					<Form>
+						<Form.Check
+							type="switch"
+							id="custom-switch"
+							onChange={this.toggleEnabled}
+							label={this.state.checkString}
+						/>
+					</Form>
 				</Form.Group>
 				{activitiesSplit.map((oneRow) => this.renderCardRow(oneRow))}
 			</div>
@@ -114,10 +152,15 @@ class ActivityList extends Component {
 }
 
 function mapStateToProps(state) {
-	return { activities: state.activities };
+	return {
+		activities: state.activities,
+		privateActivities: state.privateActivities,
+		publicActivities: state.publicActivities
+	};
 }
 
 export default connect(mapStateToProps, {
-	fetchActivities,
+	fetchActivitiesPublic,
+	fetchActivitiesPrivate,
 	createActivityInstance
 })(withRouter(ActivityList));

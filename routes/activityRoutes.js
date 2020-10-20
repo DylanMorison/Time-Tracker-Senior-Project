@@ -71,23 +71,51 @@ module.exports = (app, jsonParser) => {
 		res.send(activities);
 	});
 
+	app.get(
+		'/api/activities/public',
+		jsonParser,
+		requireLogin,
+		async (req, res) => {
+			// to get current user : req.user
+			const activities = await Activity.find({});
+			res.send(activities);
+		}
+	);
+
+	app.get(
+		'/api/activities/private',
+		jsonParser,
+		requireLogin,
+		async (req, res) => {
+			const user = req.user;
+			const activities = await Activity.find({ user });
+			res.send(activities);
+		}
+	);
+
 	app.post(
 		'/api/activities/new',
 		jsonParser,
 		requireLogin,
 		async (req, res) => {
-			const { title, description } = req.body;
+			const { title, description, subject } = req.body;
+			const user = req.user;
 
-			const activity = new Activity({
-				title,
-				description,
-				dateCreated: Date.now(),
-				user: [req.user.id]
-			});
 			try {
+				let activity = await Activity.findOne({ title, user });
+				if (activity) {
+					res.send(activity);
+					return;
+				}
+				activity = new Activity({
+					title,
+					user,
+					description,
+					subject
+				});
 				await activity.save();
 				res.send(activity);
-			} catch (err) {
+			} catch (error) {
 				res.status(500).send(err);
 			}
 		}

@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_ACTIVITIES, ACTIVITY_INSTANCE } from './types';
+import {
+	FETCH_USER,
+	FETCH_ACTIVITIES,
+	ACTIVITY_INSTANCE,
+	FETCH_PRIVATE_ACTIVITIES,
+	FETCH_PUBLIC_ACTIVITIES
+} from './types';
 
 // our middleware, reduxThunk, will inspect whatever
 // action we return from this action creator
@@ -46,7 +52,12 @@ export const submitActivity = (values, history) => async (dispatch) => {
 	dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const fetchActivities = () => async (dispatch) => {
-	const res = await axios.get('api/activities');
-	dispatch({ type: FETCH_ACTIVITIES, payload: res.data });
+export const fetchActivitiesPublic = () => async (dispatch) => {
+	const res = await axios.get('/api/activities/public');
+	dispatch({ type: FETCH_PUBLIC_ACTIVITIES, payload: res.data });
+};
+
+export const fetchActivitiesPrivate = () => async (dispatch) => {
+	const res = await axios.get('/api/activities/private');
+	dispatch({ type: FETCH_PRIVATE_ACTIVITIES, payload: res.data });
 };
