@@ -38,12 +38,16 @@ module.exports = (app, jsonParser) => {
 		async (req, res) => {
 			const user = req.user.id;
 			const activity = req.body._id;
-			const { title, description } = req.body;
+			const { title, description, subject, userCount } = req.body;
 			try {
 				let activityInstance = await ActivityInstance.findOne({
 					user,
 					activity
 				});
+				// update activity clicks to +1
+				const filter = { title, description, subject };
+				const update = { userCount: userCount + 1 };
+				await Activity.findOneAndUpdate(filter, update);
 
 				if (activityInstance) {
 					res.send(activityInstance);
@@ -100,14 +104,13 @@ module.exports = (app, jsonParser) => {
 		async (req, res) => {
 			const { title, description, subject } = req.body;
 			const user = req.user;
-
 			try {
 				let activity = await Activity.findOne({ title, user });
 				if (activity) {
 					res.send(activity);
 					return;
 				}
-				activity = new Activity({
+				activity = await new Activity({
 					title,
 					user,
 					description,
@@ -115,7 +118,7 @@ module.exports = (app, jsonParser) => {
 				});
 				await activity.save();
 				res.send(activity);
-			} catch (error) {
+			} catch (err) {
 				res.status(500).send(err);
 			}
 		}

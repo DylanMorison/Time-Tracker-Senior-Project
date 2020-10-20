@@ -14,8 +14,9 @@ mongoose.Promise = global.Promise;
 // connect to mongo db
 mongoose.connect(keys.MONGO_URI, {
 	useNewUrlParser: true,
-	useUnifiedTopology: true, 
-	useCreateIndex: true
+	useUnifiedTopology: true,
+	useCreateIndex: true,
+	useFindAndModify: false
 });
 
 const app = express();
@@ -46,6 +47,7 @@ const jsonParser = bodyParser.json();
 
 require('./routes/authRoutes')(app);
 require('./routes/activityRoutes')(app, jsonParser);
+require('./routes/userRoutes')(app, jsonParser);
 
 // process.env.NODE_ENV is an envirement variable automatically set by heroku
 if (process.env.NODE_ENV === 'production') {

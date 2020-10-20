@@ -4,7 +4,6 @@ import authReducer from './authReducer';
 import activitiesReducer from './activitiesReducer';
 import publicActivitiesReducer from './activitiesPublicReducer';
 import privateActivitiesReducer from './activitiesPrivateReducer';
-
 import activityInstanceReducer from './activityInstanceReducer';
 
 // the keys we put into the combineReducers object will represent
@@ -15,5 +14,5 @@ export default combineReducers({
 	activities: activitiesReducer,
 	publicActivities: publicActivitiesReducer,
 	privateActivities: privateActivitiesReducer,
-	activityInstance: activityInstanceReducer
+	activityInstance: activityInstanceReducer,
 });

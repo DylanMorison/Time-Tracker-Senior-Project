@@ -4,7 +4,8 @@ import {
 	FETCH_ACTIVITIES,
 	ACTIVITY_INSTANCE,
 	FETCH_PRIVATE_ACTIVITIES,
-	FETCH_PUBLIC_ACTIVITIES
+	FETCH_PUBLIC_ACTIVITIES,
+	FETCH_USER_COUNT
 } from './types';
 
 // our middleware, reduxThunk, will inspect whatever
@@ -61,3 +62,4 @@ export const fetchActivitiesPrivate = () => async (dispatch) => {
 	const res = await axios.get('/api/activities/private');
 	dispatch({ type: FETCH_PRIVATE_ACTIVITIES, payload: res.data });
 };
+

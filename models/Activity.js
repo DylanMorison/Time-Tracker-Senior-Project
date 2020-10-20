@@ -10,7 +10,7 @@ const activitySchema = new Schema({
 	description: String,
 	subject: String,
 	dateCreated: { type: Date, default: Date.now() },
-
+	userCount: { type: Number, default: 0 },
 	favorite: { type: Boolean, default: false }
 });
 mongoose.model('activities', activitySchema);

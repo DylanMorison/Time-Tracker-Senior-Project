@@ -22,7 +22,7 @@ const ActivityFormReview = ({
 	});
 
 	return (
-		<div>
+		<div style={{ margin: '5%' }}>
 			<h5>please confirm your entries</h5>
 			{reviewFields}
 			<button className="red white-text btn-flat" onClick={onCancel}>

@@ -81,7 +81,7 @@ class ActivityList extends Component {
 				<Card
 					border="primary"
 					style={{ width: '18rem' }}
-					key={activity.title}
+					key={activity.id}
 				>
 					<Card.Body
 						style={{ cursor: 'pointer', textAlign: 'center' }}
@@ -94,11 +94,22 @@ class ActivityList extends Component {
 						}}
 					>
 						<Card.Title>{activity.title}</Card.Title>
+						<Card.Subtitle className="mb-2 text-muted">
+							{activity.subject}
+						</Card.Subtitle>
+
 						<Card.Text>{activity.description}</Card.Text>
 					</Card.Body>
 					<Card.Footer>
-						<AiFillHeart />
-						<FiUsers />
+						<Card.Link>
+							<FiUsers
+								style={{
+									marginBottom: '2px'
+								}}
+							/>
+
+							{activity.userCount}
+						</Card.Link>
 					</Card.Footer>
 				</Card>
 			);

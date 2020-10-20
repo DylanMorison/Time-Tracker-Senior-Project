@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import ActivityField from './ActivityField';
 import FIELDS from './formFields';
 
-
 class ActivityForm extends React.Component {
 	renderFields() {
 		return _.map(FIELDS, (field) => {
@@ -23,7 +22,7 @@ class ActivityForm extends React.Component {
 
 	render() {
 		return (
-			<div>
+			<div style={{ margin: '5%' }}>
 				<form
 					onSubmit={this.props.handleSubmit(
 						this.props.onActivitySubmit
