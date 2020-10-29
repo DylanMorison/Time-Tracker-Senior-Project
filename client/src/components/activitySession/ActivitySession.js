@@ -21,10 +21,10 @@ class ActivitySession extends Component {
 		let hoursText
 		let minutesText
 
-		hours === 1 ? (hoursText = 'hour') : (hoursText = 'hours');
+		hours === 1 ? (hoursText = 'total hour') : (hoursText = ' total hours');
 		tempMinutes === 1
-			? (minutesText = 'minute')
-			: (minutesText = 'minutes');
+			? (minutesText = 'total minute')
+			: (minutesText = 'total minutes');
 		return (
 			<>
 				<StopWatch

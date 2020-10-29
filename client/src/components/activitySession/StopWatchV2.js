@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { updateActivityInstance } from '../../actions/index';
-import ProgressBar from 'react-bootstrap/ProgressBar';
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
-import Container from 'react-bootstrap/Container';
-import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
-import Jumbotron from 'react-bootstrap/Jumbotron';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { updateActivityInstance } from "../../actions/index";
+import ProgressBar from "react-bootstrap/ProgressBar";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Jumbotron from "react-bootstrap/Jumbotron";
 
 class Stopwatch extends Component {
 	state = {
@@ -67,10 +67,10 @@ class Stopwatch extends Component {
 		// let minutesText;
 
 		const { timerTime } = this.state;
-		let centiseconds = ('0' + (Math.floor(timerTime / 10) % 100)).slice(-2);
-		let seconds = ('0' + (Math.floor(timerTime / 1000) % 60)).slice(-2);
-		let minutes = ('0' + (Math.floor(timerTime / 60000) % 60)).slice(-2);
-		let hours = ('0' + Math.floor(timerTime / 3600000)).slice(-2);
+		let centiseconds = ("0" + (Math.floor(timerTime / 10) % 100)).slice(-2);
+		let seconds = ("0" + (Math.floor(timerTime / 1000) % 60)).slice(-2);
+		let minutes = ("0" + (Math.floor(timerTime / 60000) % 60)).slice(-2);
+		let hours = ("0" + Math.floor(timerTime / 3600000)).slice(-2);
 
 		if (parseInt(minutes) !== this.state.tempMinutes) {
 			if (this.mounted) {
@@ -80,90 +80,108 @@ class Stopwatch extends Component {
 		}
 		let secondsPercentage = Math.trunc((seconds / 60) * 100);
 		let minutesPercentage = Math.trunc((minutes / 60) * 100);
+		let globalMinutes = Math.trunc((this.props.activityMinutes / 60) * 100);
+		let globalHours = Math.trunc((this.props.activityHours / 60) * 100);
 
 		return (
 			<>
-				<Container>
-					<Jumbotron
+				<Container style={{ textAlign: "center" }}>
+					<Row
 						style={{
-							textAlign: 'center',
-							margin: '3%'
+							margin: "0% 0%",
+							backgroundColor: "#c1c7cd",
+							padding: "5% 0%",
+							borderColor: "#17a2b8",
+							borderStyle: "solid"
 						}}
 					>
-						<h1>{this.props.activityInstance.title}</h1>
-						<h3>{this.props.activityInstance.description}</h3>
-					</Jumbotron>
-					<Jumbotron
-						style={{
-							textAlign: 'center',
-							margin: '5%'
-						}}
-					>
-						<Row>
-							<Col sm={12}>
-								<h1>Global Time</h1>
-							</Col>
-						</Row>
-						<Row>
-							<Col sm={6} style={{ textSizeAdjust: '10px' }}>
-								<CircularProgressbar
-									value={this.props.activityMinutes}
-									text={`${parseInt(
-										this.props.activityMinutes
-									)} ${this.props.minutesText}`}
-									styles={buildStyles({
-										textSize: '12px'
-									})}
-								/>
-							</Col>
-							<Col sm={6}>
-								<CircularProgressbar
-									value={this.props.activityHours}
-									text={`${this.props.activityHours} ${this.props.hoursText}`}
-									styles={buildStyles({
-										textSize: '12px'
-									})}
-								/>
-							</Col>
-						</Row>
-					</Jumbotron>
-
-					<Jumbotron
-						style={{
-							textAlign: 'center',
-							margin: '10%'
-						}}
-					>
-						<Row
+						<Col sm={4} style={{ textSizeAdjust: "10px" }}>
+							<CircularProgressbar
+								value={globalMinutes}
+								text={`${parseInt(this.props.activityMinutes)} ${
+									this.props.minutesText
+								}`}
+								styles={buildStyles({
+									textSize: "10px",
+									textColor: "#5391d0",
+									pathColor: "#17a2b8",
+									trailColor: "#e6f2ff"
+								})}
+							/>
+						</Col>
+						<Col
+							sm={4}
 							style={{
-								marginBottom: '3%'
+								textAlign: "center",
+								textOverflow: "",
+								marginTop: "25px",
+								color: "#5391d0"
 							}}
 						>
-							<Col sm={12}>
-								<h1>Current Time</h1>
-							</Col>
-						</Row>
-						<Row>
-							<Col sm={4}>
-								<CircularProgressbar
-									value={secondsPercentage}
-									text={`${parseInt(seconds)} sec`}
-								/>
-							</Col>
-							<Col sm={4}>
-								<CircularProgressbar
-									value={minutesPercentage}
-									text={`${parseInt(minutes)} min`}
-								/>
-							</Col>
-							<Col sm={4}>
-								<CircularProgressbar
-									value={hours}
-									text={`${parseInt(hours)} hours`}
-								/>
-							</Col>
-						</Row>
-					</Jumbotron>
+							<h1>{this.props.activityInstance.title}</h1>
+							<h3>{this.props.activityInstance.description}</h3>
+						</Col>
+						<Col sm={4}>
+							<CircularProgressbar
+								value={this.props.activityHours}
+								text={`${this.props.activityHours} ${this.props.hoursText}`}
+								styles={buildStyles({
+									textSize: "10px",
+									textColor: "#5391d0",
+									pathColor: "#17a2b8",
+									trailColor: "#e6f2ff"
+								})}
+							/>
+						</Col>
+					</Row>
+
+					<Row
+						style={{
+							margin: "0% 0%",
+							backgroundColor: "#c1c7cd",
+							padding: "5% 0%",
+							borderColor: "#17a2b8",
+							borderStyle: "solid",
+							borderTop: "none"
+						}}
+					>
+						<Col sm={4}>
+							<CircularProgressbar
+								value={secondsPercentage}
+								text={`${parseInt(seconds)} current sec`}
+								styles={buildStyles({
+									textSize: "12px",
+									textColor: "#5391d0",
+									pathColor: "#17a2b8",
+									trailColor: "#e6f2ff"
+								})}
+							/>
+						</Col>
+						<Col sm={4}>
+							<CircularProgressbar
+								value={minutesPercentage}
+								text={`${parseInt(minutes)} current min`}
+								styles={buildStyles({
+									textSize: "12px",
+									textColor: "#5391d0",
+									pathColor: "#17a2b8",
+									trailColor: "#e6f2ff"
+								})}
+							/>
+						</Col>
+						<Col sm={4}>
+							<CircularProgressbar
+								value={hours}
+								text={`${parseInt(hours)} current hours`}
+								styles={buildStyles({
+									textSize: "12px",
+									textColor: "#5391d0",
+									pathColor: "#17a2b8",
+									trailColor: "#e6f2ff"
+								})}
+							/>
+						</Col>
+					</Row>
 				</Container>
 			</>
 		);
