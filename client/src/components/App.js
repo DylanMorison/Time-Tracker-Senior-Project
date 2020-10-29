@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 // BrowserRouter is the "brains" of react-router
 // BrowserRouter is the thing that tells react-router how to behave
@@ -8,16 +8,17 @@ import React, { Component } from 'react';
 // The Route object is a react component
 // used to set up a rule between a certain route the user might visit
 // and a set of components that will be visible on the screen
-import { BrowserRouter, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actions from '../actions';
+import { BrowserRouter, Route } from "react-router-dom";
+import { connect } from "react-redux";
+import * as actions from "../actions";
 
-import Navbar from './navbar/Navbar';
-import Home from './homePage/Home';
-import Dashboard from './Dashboard';
-import ActivityNew from './activities/ActivityNew';
-import ActivitySession from './activitySession/ActivitySession';
-import './App.css';
+import Navbar from "./navbar/Navbar";
+import Home from "./homePage/Home";
+import Dashboard from "./Dashboard";
+import ActivityNew from "./activities/ActivityNew";
+import ActivitySession from "./activitySession/ActivitySession";
+import Goals from "./goals/Goals";
+import "./App.css";
 // BrowserRouter expects to only get one child/div
 class App extends Component {
 	componentDidMount() {
@@ -36,6 +37,7 @@ class App extends Component {
 						path="/activities/activity/instance"
 						component={ActivitySession}
 					/>
+					<Route exact path="/goals" component={Goals} />
 
 					<Route path="/activities/new" component={ActivityNew} />
 				</div>
