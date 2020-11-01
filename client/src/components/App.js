@@ -8,6 +8,8 @@ import Dashboard from "./Dashboard";
 import ActivityNew from "./activities/ActivityNew";
 import ActivitySession from "./activitySession/ActivitySession";
 import Goals from "./goals/Goals";
+import WebSocketMain from "./WebSocketMain";
+
 import "./App.css";
 
 class App extends Component {
@@ -22,6 +24,7 @@ class App extends Component {
 					<Navbar />
 					<Route exact path="/" component={Home} />
 					<Route exact path="/activities" component={Dashboard} />
+					<Route exact path="/WebSocketMain" component={WebSocketMain} />
 					<Route
 						exact
 						path="/activities/activity/instance"

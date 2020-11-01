@@ -6,7 +6,6 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const http = require("http");
 const socketio = require("socket.io");
-const { Socket } = require("net");
 
 require("./models/User");
 require("./models/Activity");

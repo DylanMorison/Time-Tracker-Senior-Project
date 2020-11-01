@@ -113,11 +113,11 @@ class Navbar extends Component {
 								</li>
 								<li className="nav-item">
 									<Link
-										to="/goals"
+										to="/WebSocketMain"
 										className="nav-links"
 										onClick={this.closeMobileMenu}
 									>
-										Study Goals
+										Testing Web Socket
 									</Link>
 								</li>
 								<li className="nav-item">
