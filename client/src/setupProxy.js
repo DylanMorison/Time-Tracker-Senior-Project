@@ -7,12 +7,4 @@ module.exports = function (app) {
 			target: "http://localhost:5000"
 		})
 	);
-
-	app.use(
-		// in production, when deployed to heroku
-		["/WebSocketMain"],
-		createProxyMiddleware({
-			target: "http://localhost:5001"
-		})
-	);
 };
