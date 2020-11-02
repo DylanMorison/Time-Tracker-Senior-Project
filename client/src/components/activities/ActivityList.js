@@ -1,26 +1,24 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { connect } from "react-redux";
 import {
 	fetchActivitiesPublic,
 	fetchActivitiesPrivate,
 	createActivityInstance
-} from '../../actions';
-import { withRouter } from 'react-router-dom';
+} from "../../actions";
+import { withRouter } from "react-router-dom";
 
-import CardDeck from 'react-bootstrap/CardDeck';
-import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import { AiFillHeart } from 'react-icons/ai';
-import { FiUsers } from 'react-icons/fi';
-
-import './ActivityList.css';
+import CardDeck from "react-bootstrap/CardDeck";
+import Card from "react-bootstrap/Card";
+import Form from "react-bootstrap/Form";
+import { AiFillHeart } from "react-icons/ai";
+import { FiUsers } from "react-icons/fi";
 
 class ActivityList extends Component {
 	state = {
-		term: '',
+		term: "",
 		activityTitles: [],
 		private: true,
-		checkString: 'Private Activities'
+		checkString: "Private Activities"
 	};
 
 	componentDidMount() {
@@ -69,22 +67,14 @@ class ActivityList extends Component {
 
 	renderCards(row) {
 		return row.map((activity) => {
-			if (
-				!activity.title
-					.toLowerCase()
-					.includes(this.state.term.toLowerCase())
-			) {
+			if (!activity.title.toLowerCase().includes(this.state.term.toLowerCase())) {
 				return false;
 			}
 
 			return (
-				<Card
-					border="primary"
-					style={{ width: '18rem' }}
-					key={activity.id}
-				>
+				<Card border="primary" style={{ width: "18rem" }} key={activity.id}>
 					<Card.Body
-						style={{ cursor: 'pointer', textAlign: 'center' }}
+						style={{ cursor: "pointer", textAlign: "center" }}
 						onClick={() => {
 							this.props.createActivityInstance(
 								activity,
@@ -104,7 +94,7 @@ class ActivityList extends Component {
 						<Card.Link>
 							<FiUsers
 								style={{
-									marginBottom: '2px'
+									marginBottom: "2px"
 								}}
 							/>
 
@@ -117,18 +107,14 @@ class ActivityList extends Component {
 	}
 
 	renderCardRow = (oneRow) => {
-		return (
-			<CardDeck key={oneRow[0].title}>
-				{this.renderCards(oneRow)}
-			</CardDeck>
-		);
+		return <CardDeck key={oneRow[0].title}>{this.renderCards(oneRow)}</CardDeck>;
 	};
 
 	toggleEnabled = () => {
 		if (this.state.private) {
-			this.setState({ private: false, checkString: 'Public Activities' });
+			this.setState({ private: false, checkString: "Public Activities" });
 		} else {
-			this.setState({ private: true, checkString: 'Private Activities' });
+			this.setState({ private: true, checkString: "Private Activities" });
 		}
 	};
 
@@ -143,9 +129,7 @@ class ActivityList extends Component {
 						type="text"
 						placeholder="Search For An Activity"
 						value={this.state.term}
-						onChange={(e) =>
-							this.setState({ term: e.target.value })
-						}
+						onChange={(e) => this.setState({ term: e.target.value })}
 					/>
 					<Form>
 						<Form.Check
