@@ -15,7 +15,7 @@ import { GiSandsOfTime } from "react-icons/gi";
 function Footer() {
 	return (
 		<div className="footer-container">
-			<section className="footer-subscription">
+			{/* <section className="footer-subscription">
 				<p className="footer-subscription-heading">Opt into our newsletter!</p>
 				<p className="footer-subscription-text">
 					You can unsubscribe at any time.
@@ -66,7 +66,7 @@ function Footer() {
 						<Link to="/">Twitter</Link>
 					</div>
 				</div>
-			</div>
+			</div> */}
 			<section className="social-media">
 				<div className="social-media-wrap">
 					<div className="footer-logo">

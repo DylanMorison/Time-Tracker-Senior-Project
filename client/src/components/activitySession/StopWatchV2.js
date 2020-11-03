@@ -87,10 +87,13 @@ class Stopwatch extends Component {
 					<Row
 						style={{
 							margin: "0% 0%",
-							backgroundColor: "#c1c7cd",
+							backgroundColor: "grey",
 							padding: "5% 0%",
-							borderColor: "#17a2b8",
-							borderStyle: "solid"
+							borderColor: "white",
+							borderStyle: "solid",
+							borderTop: "none",
+							borderLeft: "none",
+							borderRight: "none"
 						}}
 					>
 						<Col sm={4} style={{ textSizeAdjust: "10px" }}>
@@ -101,8 +104,8 @@ class Stopwatch extends Component {
 								}`}
 								styles={buildStyles({
 									textSize: "10px",
-									textColor: "#5391d0",
-									pathColor: "#17a2b8",
+									textColor: "white",
+									pathColor: "red",
 									trailColor: "#e6f2ff"
 								})}
 							/>
@@ -113,7 +116,7 @@ class Stopwatch extends Component {
 								textAlign: "center",
 								textOverflow: "",
 								marginTop: "25px",
-								color: "#5391d0"
+								color: "white"
 							}}
 						>
 							<h1>{this.props.activityInstance.title}</h1>
@@ -125,8 +128,8 @@ class Stopwatch extends Component {
 								text={`${this.props.activityHours} ${this.props.hoursText}`}
 								styles={buildStyles({
 									textSize: "10px",
-									textColor: "#5391d0",
-									pathColor: "#17a2b8",
+									textColor: "white",
+									pathColor: "red",
 									trailColor: "#e6f2ff"
 								})}
 							/>
@@ -136,11 +139,13 @@ class Stopwatch extends Component {
 					<Row
 						style={{
 							margin: "0% 0%",
-							backgroundColor: "#c1c7cd",
+							backgroundColor: "grey",
 							padding: "5% 0%",
 							borderColor: "#17a2b8",
-							borderStyle: "solid",
-							borderTop: "none"
+							borderTop: "none",
+							borderLeft: "none",
+							borderRight: "none",
+							borderBottom: "none"
 						}}
 					>
 						<Col sm={4}>
@@ -149,8 +154,8 @@ class Stopwatch extends Component {
 								text={`${parseInt(seconds)} current sec`}
 								styles={buildStyles({
 									textSize: "12px",
-									textColor: "#5391d0",
-									pathColor: "#17a2b8",
+									textColor: "white",
+									pathColor: "red",
 									trailColor: "#e6f2ff"
 								})}
 							/>
@@ -161,8 +166,8 @@ class Stopwatch extends Component {
 								text={`${parseInt(minutes)} current min`}
 								styles={buildStyles({
 									textSize: "12px",
-									textColor: "#5391d0",
-									pathColor: "#17a2b8",
+									textColor: "white",
+									pathColor: "red",
 									trailColor: "#e6f2ff"
 								})}
 							/>
@@ -173,12 +178,13 @@ class Stopwatch extends Component {
 								text={`${parseInt(hours)} current hours`}
 								styles={buildStyles({
 									textSize: "12px",
-									textColor: "#5391d0",
-									pathColor: "#17a2b8",
+									textColor: "white",
+									pathColor: "red",
 									trailColor: "#e6f2ff"
 								})}
 							/>
 						</Col>
+						
 					</Row>
 				</Container>
 			</>

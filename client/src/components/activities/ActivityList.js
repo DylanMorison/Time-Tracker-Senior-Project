@@ -70,7 +70,6 @@ class ActivityList extends Component {
 			if (!activity.title.toLowerCase().includes(this.state.term.toLowerCase())) {
 				return false;
 			}
-
 			return (
 				<Card border="primary" style={{ width: "18rem" }} key={activity.id}>
 					<Card.Body

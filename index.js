@@ -28,24 +28,24 @@ const server = http.createServer(app);
 
 const io = socketio(server);
 
-const getApiAndEmit = socket => {
-	const response = new Date();
-	// Emitting a new message. Will be consumed by the client
-	socket.emit("FromAPI", response);
-  };
-
-let interval;
+/**
+ * @param connection: Whenever a new user connects io.on("connection", () => {}) is run
+ * @param socket: An oject that contains information about a new connection
+ */
 
 io.on("connection", (socket) => {
-	console.log("New client connected");
-	if (interval) {
-		clearInterval(interval);
-	}
-	interval = setInterval(() => getApiAndEmit(socket), 1000);
-	socket.on("disconnected", () => {
-		console.log("Client disconnected");
-		clearInterval(interval);
-	});
+	/**
+	 * @param socket.emit: emits to connection instancec
+	 * @param socket.broadcast.emit: emits to everyone but current connection instance
+	 * @param io.emit: emits to all connections
+	 * @param io.to.emit: emits to everyone in a specific room
+	 * @param socket.broadcast.to.emit: sends messages to every client limited to a room
+	 * @param socket.join: ?
+	 */
+
+	console.log("New Websocket connection!");
+
+	socket.emit("message", "Welcome New User!");
 });
 
 app.use(

@@ -49,7 +49,7 @@ passport.use(
 			}
 			// we dont have user record with this googleID, make a new record
 			//when we call save() it will save the model isntance to the database for us
-			const user = await new User({ googleID: profile.id }).save();
+			const user = await new User({ googleID: profile.id, username: "default_user_name" }).save();
 			// we always make use of the provided user
 			// in the proimse callback
 			done(null, user);

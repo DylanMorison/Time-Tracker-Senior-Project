@@ -1,11 +1,9 @@
 import axios from 'axios';
 import {
 	FETCH_USER,
-	FETCH_ACTIVITIES,
 	ACTIVITY_INSTANCE,
 	FETCH_PRIVATE_ACTIVITIES,
 	FETCH_PUBLIC_ACTIVITIES,
-	FETCH_USER_COUNT
 } from './types';
 
 // our middleware, reduxThunk, will inspect whatever

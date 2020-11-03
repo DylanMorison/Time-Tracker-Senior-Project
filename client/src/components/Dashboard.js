@@ -4,7 +4,7 @@ import ActivityList from "./activities/ActivityList";
 
 const Dashboard = () => {
 	return (
-		<div>
+		<>
 			<ActivityList />
 			
 			<div className="fixed-action-btn">
@@ -12,7 +12,7 @@ const Dashboard = () => {
 					<i className="material-icons">add</i>
 				</Link>
 			</div>
-		</div>
+		</>
 	);
 };
 
