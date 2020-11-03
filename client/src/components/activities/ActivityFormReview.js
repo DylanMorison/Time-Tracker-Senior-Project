@@ -28,6 +28,7 @@ const ActivityFormReview = ({
 			<button className="red white-text btn-flat" onClick={onCancel}>
 				Back
 			</button>
+			
 			<button
 				onClick={() => submitActivity(formValues, history)}
 				className="teal btn-flat right white-text"

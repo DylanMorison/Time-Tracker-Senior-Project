@@ -10,6 +10,7 @@ import ActivityNew from "./activities/ActivityNew";
 import ActivitySession from "./activitySession/ActivitySession";
 import WebSocketMain from "./WebSocketMain";
 import SideBar from "./userSideBar/SideBar";
+import Profile from "./profile/Profile";
 
 import "./App.css";
 
@@ -35,6 +36,7 @@ class App extends Component {
 				</div>
 				<div className="container" id="left">
 					<Navbar />
+					<Route exact path="/profile" component={Profile} />
 					<Route exact path="/" component={Home} />
 					<Route exact path="/activities" component={Dashboard} />
 					<Route

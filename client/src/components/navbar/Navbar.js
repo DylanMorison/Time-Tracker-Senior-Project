@@ -71,7 +71,11 @@ class Navbar extends Component {
 			default:
 				return (
 					<a className="nav-links" onClick={this.closeMobileMenu}>
-						Hi {this.props.auth.username}!
+						<div></div>Hi{" "}
+						{this.props.auth.username !== undefined
+							? this.props.auth.username
+							: this.props.auth.user.username}
+						!
 					</a>
 				);
 		}
@@ -100,7 +104,15 @@ class Navbar extends Component {
 									this.state.click ? "nav-menu active" : "nav-menu"
 								}
 							>
-								<li className="nav-item">{this.renderUsername()}</li>
+								<li className="nav-item">
+									<Link
+										to={this.props.auth ? "/profile" : "/"}
+										className="nav-links"
+										onClick={this.closeMobileMenu}
+									>
+										{this.renderUsername()}
+									</Link>
+								</li>
 
 								<li className="nav-item">
 									<Link
