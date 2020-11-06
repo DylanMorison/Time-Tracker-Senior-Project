@@ -1,14 +1,16 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { createActivityInstance } from '../../actions/index';
-import { withRouter } from 'react-router-dom';
-import StopWatch from './StopWatchV2';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { createActivityInstance, updateUserRoom } from "../../actions/index";
+import { withRouter } from "react-router-dom";
+import StopWatch from "./StopWatchV2";
 
 class ActivitySession extends Component {
 	componentDidMount() {
 		setTimeout(() => {
-			if (this.props.activityInstance.title === 'Activity Title') {
-				this.props.history.push('/activities');
+			if (this.props.activityInstance.title === "Activity Title") {
+				this.props.history.push("/activities");
+			} else {
+				this.props.updateUserRoom(this.props.activityInstance.title);
 			}
 		}, 10);
 	}
@@ -18,13 +20,13 @@ class ActivitySession extends Component {
 
 		const hours = Math.trunc(minutes / 60);
 		const tempMinutes = minutes % 60;
-		let hoursText
-		let minutesText
+		let hoursText;
+		let minutesText;
 
-		hours === 1 ? (hoursText = 'total hour') : (hoursText = ' total hours');
+		hours === 1 ? (hoursText = "total hour") : (hoursText = " total hours");
 		tempMinutes === 1
-			? (minutesText = 'total minute')
-			: (minutesText = 'total minutes');
+			? (minutesText = "total minute")
+			: (minutesText = "total minutes");
 		return (
 			<>
 				<StopWatch
@@ -47,6 +49,6 @@ function mapStateToProps(state) {
 	return { activityInstance: state.activityInstance };
 }
 
-export default connect(mapStateToProps, { createActivityInstance })(
+export default connect(mapStateToProps, { createActivityInstance, updateUserRoom })(
 	withRouter(ActivitySession)
 );

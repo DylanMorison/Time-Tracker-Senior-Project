@@ -6,6 +6,7 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const http = require("http");
 const socketio = require("socket.io");
+const { addUser, removeUser, getUser, getUsersInRoom } = require("./utils/users_io");
 
 require("./models/User");
 require("./models/Activity");
@@ -46,6 +47,22 @@ io.on("connection", (socket) => {
 	console.log("New Websocket connection!");
 
 	socket.emit("message", "Welcome New User!");
+
+	socket.on("joinCurrentPage", (user_id, username, currentPage) => {
+		debugger
+		const { error, user } = addUser({ id: user_id, username, room: currentPage });
+
+		if (error) {
+			console.log(error);
+		}
+
+		socket.join(user.room);
+		console.log(getUsersInRoom(user.room))
+		socket.broadcast.to(user.room).emit("roomData", {
+			room: user.room,
+			users: getUsersInRoom(user.room)
+		});
+	});
 });
 
 app.use(

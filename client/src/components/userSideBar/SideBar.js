@@ -1,23 +1,22 @@
 import React from "react";
 import _ from "lodash";
-import io from "socket.io-client";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
+import { fetchUsers } from "../../actions/index";
 
 import "./styles.min.css";
 
 class SideBar extends React.Component {
 	state = {
 		user: null,
-		ENDPOINT: "http://localhost:5000",
-		socket: false,
-		users: [0, 1, 2, 3, 4, 5, 6, 7, 8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29, 30,],
 		pathname: this.props.location.pathname
 	};
 
 	componentDidMount() {
-		this.initSocket();
+		setInterval(() => {
+			this.props.fetchUsers(this.checkPathName());
+		}, 3000);
 	}
 
 	componentDidUpdate() {
@@ -26,43 +25,52 @@ class SideBar extends React.Component {
 		}
 	}
 
-	initSocket = () => {
-		const socket = io(this.state.ENDPOINT);
-		socket.on("message", (msg) => {
-			console.log(msg);
-		});
-		this.setState({ socket: socket });
-	};
-
-	sendToServer = () => {
-		if (this.state.socket !== false) {
-			this.state.socket.emit("increment");
-		}
-	};
-
 	checkPathName = () => {
 		switch (this.state.pathname) {
+			case "/profile":
+				return "Profile";
 			case "/":
 				return "Home";
 			case "/activities":
 				return "Activities";
 			case "/activities/activity/instance":
-				return "Time Tracking";
+				return `${this.props.activityInstance.title}`;
 			default:
 				return "";
 		}
 	};
 
+	checkUserName = () => {
+		let currentUserName;
+		if (this.props.user) {
+			if (this.props.user.username === undefined) {
+				currentUserName = this.props.user.user.username;
+			} else {
+				currentUserName = this.props.user.username;
+			}
+		}
+		return currentUserName;
+	};
+
 	renderUsers = () => {
-		return this.state.users.map((key) => {
+		return this.props.users.map((user) => {
+			if (user.username === this.checkUserName()) {
+				return;
+			}
 			return (
 				<li
-					key={key}
-					className="center-align"
-					style={{ borderBottom: "", marginTop: "5px" }}
+					key={user._id}
+					className="left-align"
+					style={{ borderBottom: "", marginTop: "5px", marginLeft: "6px" }}
 				>
-					<FaUserCircle style={{ marginRight: "4px", color: "greenyellow" }} />
-					username
+					<FaUserCircle
+						style={{
+							marginRight: "6px",
+							color: "greenyellow",
+							marginBottom: "2px"
+						}}
+					/>
+					{user.username}
 				</li>
 			);
 		});
@@ -70,12 +78,28 @@ class SideBar extends React.Component {
 
 	render() {
 		return (
-			<div className="chat" className="center-align">
+			<div className="chat" className="left-align">
 				<div id="sidebar" className="chat__sidebar">
 					<h2 className="room-title" style={{ borderBottom: "solid" }}>
 						room: {this.checkPathName()}
 					</h2>
-					<ul className="users">{this.renderUsers()}</ul>
+					<ul className="users">
+						<li
+							key={2134123}
+							className="left-align"
+							style={{
+								borderBottom: "",
+								marginTop: "5px",
+								marginLeft: "6px"
+							}}
+						>
+							<FaUserCircle
+								style={{ marginRight: "6px", color: "greenyellow" }}
+							/>
+							{this.checkUserName()}
+						</li>
+						{this.renderUsers()}
+					</ul>
 				</div>
 			</div>
 		);
@@ -83,7 +107,13 @@ class SideBar extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-	return { auth: state.auth };
+	return {
+		user: state.auth,
+		activityInstance: state.activityInstance,
+		users: state.users
+	};
 };
 
-export default connect(mapStateToProps)(withRouter(SideBar));
+export default connect(mapStateToProps, { fetchUsers })(
+	withRouter(SideBar)
+);

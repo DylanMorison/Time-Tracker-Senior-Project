@@ -3,7 +3,9 @@ import { connect } from "react-redux";
 import {
 	fetchActivitiesPublic,
 	fetchActivitiesPrivate,
-	createActivityInstance
+	createActivityInstance,
+	updateUserRoom,
+	updateActivityPopularity
 } from "../../actions";
 import { withRouter } from "react-router-dom";
 
@@ -24,6 +26,7 @@ class ActivityList extends Component {
 	componentDidMount() {
 		this.props.fetchActivitiesPublic();
 		this.props.fetchActivitiesPrivate();
+		this.props.updateUserRoom("Activities");
 	}
 
 	dynamicSearch = () => {
@@ -75,6 +78,7 @@ class ActivityList extends Component {
 					<Card.Body
 						style={{ cursor: "pointer", textAlign: "center" }}
 						onClick={() => {
+							this.props.updateActivityPopularity(activity);
 							this.props.createActivityInstance(
 								activity,
 								this.props.history,
@@ -156,5 +160,7 @@ function mapStateToProps(state) {
 export default connect(mapStateToProps, {
 	fetchActivitiesPublic,
 	fetchActivitiesPrivate,
-	createActivityInstance
+	createActivityInstance,
+	updateUserRoom,
+	updateActivityPopularity
 })(withRouter(ActivityList));

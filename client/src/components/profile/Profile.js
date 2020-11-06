@@ -6,10 +6,21 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
-import { changeUserName } from "../../actions/index";
+import { changeUserName, updateUserRoom } from "../../actions/index";
 
 class Profile extends Component {
 	state = { term: "" };
+
+	componentDidMount() {
+		this.props.updateUserRoom("Profile");
+	}
+
+	enterKeyPush = (e) => {
+		if (e.key === "Enter") {
+			this.props.changeUserName(this.state.term);
+			this.setState({ term: "" });
+		}
+	};
 
 	render() {
 		let userNamePlaceHolder;
@@ -47,6 +58,7 @@ class Profile extends Component {
 											term = term.replace(/[^A-Za-z]/gi, "");
 											this.setState({ term });
 										}}
+										onKeyDown={(e) => this.enterKeyPush(e)}
 										style={{ textAlign: "center" }}
 									></Form.Control>
 								</Form.Group>
@@ -71,13 +83,13 @@ class Profile extends Component {
 										}
 									}}
 								>
-									Yes
+									Submit
 								</Button>
 								<Button
 									variant="danger"
 									onClick={() => this.setState({ term: "" })}
 								>
-									No
+									Cancel
 								</Button>
 							</Jumbotron>
 						</Col>
@@ -95,4 +107,4 @@ const mapStateToProps = (state) => {
 	return { user: state.auth };
 };
 
-export default connect(mapStateToProps, { changeUserName })(Profile);
+export default connect(mapStateToProps, { changeUserName, updateUserRoom })(Profile);

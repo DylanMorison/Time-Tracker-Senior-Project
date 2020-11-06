@@ -4,7 +4,7 @@ import {
 	ACTIVITY_INSTANCE,
 	FETCH_PRIVATE_ACTIVITIES,
 	FETCH_PUBLIC_ACTIVITIES,
-	UPDATE_USERNAME
+	FETCH_ALL_USERS
 } from "./types";
 
 // our middleware, reduxThunk, will inspect whatever
@@ -45,6 +45,10 @@ export const submitActivity = (values, history) => async (dispatch) => {
 	dispatch({ type: FETCH_USER, payload: res.data });
 };
 
+export const updateActivityPopularity = (activity) => async (dispatch) => {
+	await axios.put("/api/activity/user/count", activity);
+};
+
 export const fetchActivitiesPublic = () => async (dispatch) => {
 	const res = await axios.get("/api/activities/public");
 	dispatch({ type: FETCH_PUBLIC_ACTIVITIES, payload: res.data });
@@ -66,4 +70,15 @@ export const changeUserName = (username) => async (dispatch) => {
 		}
 	);
 	dispatch({ type: FETCH_USER, payload: res.data });
+};
+
+export const updateUserRoom = (newRoom) => async (dispatch) => {
+	const res = await axios.post("/api/users/page/update", { newRoom });
+	console.log(res);
+	dispatch({ type: FETCH_USER, payload: res.data });
+};
+
+export const fetchUsers = (currentRoom) => async (dispatch) => {
+	const res = await axios.post("/api/users", { room: currentRoom });
+	dispatch({ type: FETCH_ALL_USERS, payload: res.data });
 };

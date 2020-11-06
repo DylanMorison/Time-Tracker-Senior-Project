@@ -12,7 +12,9 @@ var nameValidator = [
 
 const userSchema = new Schema({
 	googleID: String,
-	username: { type: String, required: true, validate: nameValidator }
+	username: { type: String, required: true, validate: nameValidator },
+	currentRoom: { type: String, default: "" },
+	isActive: { type: Boolean, default: true }
 });
 
 mongoose.model("users", userSchema);

@@ -19,6 +19,12 @@ class App extends Component {
 		this.props.fetchUser();
 	}
 
+	showSideBar = () => {
+		if (this.props.user) {
+			return <SideBar />;
+		}
+	};
+
 	render() {
 		return (
 			<BrowserRouter>
@@ -32,7 +38,7 @@ class App extends Component {
 						zIndex: "1000"
 					}}
 				>
-					<SideBar />
+					{this.showSideBar()}
 				</div>
 				<div className="container" id="left">
 					<Navbar />
@@ -51,4 +57,9 @@ class App extends Component {
 		);
 	}
 }
-export default connect(null, actions)(App);
+
+const mapStateToProps = (state) => {
+	return { user: state.auth };
+};
+
+export default connect(mapStateToProps, actions)(App);

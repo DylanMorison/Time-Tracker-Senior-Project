@@ -1,10 +1,15 @@
-import React from 'react';
-import HomeSection from './HomeSection';
-import { homeObjOne, homeObjTwo, homeObjThree, homeObjFour } from './Data';
-import Footer from '../Footer/Footer';
+import React, { useEffect } from "react";
+import HomeSection from "./HomeSection";
+import { homeObjOne, homeObjTwo, homeObjThree, homeObjFour } from "./Data";
+import Footer from "../Footer/Footer";
+import { connect } from "react-redux";
+import { updateUserRoom } from "../../actions/index";
 
+function Home({ updateUserRoom }) {
+	useEffect(() => {
+		updateUserRoom("Home");
+	}, []);
 
-function Home() {
 	return (
 		<>
 			<HomeSection {...homeObjOne} />
@@ -16,4 +21,8 @@ function Home() {
 	);
 }
 
-export default Home;
+const mapStateToProps = () => {
+	return {};
+};
+
+export default connect(mapStateToProps, { updateUserRoom })(Home);

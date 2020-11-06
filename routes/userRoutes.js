@@ -1,22 +1,50 @@
 const mongoose = require("mongoose");
 const requireLogin = require("../middlewares/requireLogin");
-const Activity = mongoose.model("activities");
 const User = mongoose.model("users");
 
 module.exports = (app, jsonParser) => {
-	app.put("/api/activity/user/count", jsonParser, requireLogin, async (req, res) => {
-		const user = req.user.id;
-		const { title, description } = req.body;
-		const filter = { user, title, description };
-		let userCount = 0;
+	app.post("/api/users", jsonParser, requireLogin, async (req, res) => {
+		const { room } = req.body;
+		console.log(room);
+		console.log(req.user);
 		try {
-			const activities = await Activity.find({ title });
+			const users = await User.find({
+				currentRoom: { $in: [room] }
+			});
+			if (users) {
+				res.send(users);
+			}
+		} catch (err) {
+			console.log(err);
+		}
+	});
 
-			const update = { userCount: activities.length };
+	app.post("/api/users/page/update", jsonParser, requireLogin, async (req, res) => {
+		const _id = req.user.id;
+		const { newRoom } = req.body;
+		/**
+		 * ? We want to check user.currentRoom and compare it to currentRoom
+		 * ? if same sendback the user without making any changes
+		 * ? if diff update user, save in db, and send to front end
+		 */
+		try {
+			const user = await User.findById({ _id });
 
-			await Activity.findOneAndUpdate(filter, update);
-		} catch (error) {
-			console.error(error.msg);
+			if (user) {
+				if (user.currentRoom.toLowerCase() !== newRoom.toLowerCase()) {
+					const filter = { _id };
+					const update = { currentRoom: newRoom };
+					const newUser = await User.findOneAndUpdate(filter, update, {
+						new: true
+					});
+					await newUser.save();
+					res.send(newUser);
+				} else {
+					res.send(user);
+				}
+			}
+		} catch (err) {
+			res.status(400).send(err);
 		}
 	});
 
@@ -35,7 +63,7 @@ module.exports = (app, jsonParser) => {
 				res.send(newUser);
 			}
 		} catch (err) {
-			console.err(err.msg);
+			res.status(400).send(err);
 		}
 	});
 };

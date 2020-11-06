@@ -3,19 +3,19 @@ const chalk = require("chalk");
 const requireLogin = require("../middlewares/requireLogin");
 const Activity = mongoose.model("activities");
 const ActivityInstance = mongoose.model("activityInstance");
+const User = mongoose.model("users");
 
 module.exports = (app, jsonParser) => {
 	app.put("/api/activity/user/count", jsonParser, requireLogin, async (req, res) => {
 		const user = req.user.id;
-		const { title, description } = req.body;
-		const filter = { user, title, description };
-		let userCount = 0;
+		const { title } = req.body;
+		// this should be the number of users in the room!
 		try {
-			const activities = await Activity.find({ title });
-
-			const update = { userCount: activities.length };
-
-			await Activity.findOneAndUpdate(filter, update);
+			const users = await User.find({ currentRoom: { $in: [title] } });
+			const userCount = users.length;
+			const update = { userCount };
+			const filter = { title };
+			Activity.updateMany(filter, update);
 		} catch (error) {
 			console.error(error.msg);
 		}
@@ -50,14 +50,17 @@ module.exports = (app, jsonParser) => {
 		const activity = req.body._id;
 		const { title, description, subject, userCount } = req.body;
 		try {
+			const activities = await Activity.find({ title: { $in: [title] } });
+			const userCount = activities.length;
+
+			const update = { userCount };
+			const filter = { user, title, description };
+			await Activity.findOneAndUpdate(filter, update);
+
 			let activityInstance = await ActivityInstance.findOne({
 				user,
 				activity
 			});
-			// update activity clicks to +1
-			const filter = { title, description, subject };
-			const update = { userCount: userCount + 1 };
-			await Activity.findOneAndUpdate(filter, update);
 
 			if (activityInstance) {
 				res.send(activityInstance);
@@ -100,7 +103,7 @@ module.exports = (app, jsonParser) => {
 		const { title, description, subject } = req.body;
 		const user = req.user;
 		try {
-			let activity = await Activity.findOne({ title, user });
+			let activity = await Activity.findOne({ title, user, description, subject });
 			if (activity) {
 				res.send(activity);
 				return;
