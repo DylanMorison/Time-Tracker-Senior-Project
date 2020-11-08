@@ -19,7 +19,7 @@ class ActivityList extends Component {
 	state = {
 		term: "",
 		activityTitles: [],
-		private: true,
+		private: false,
 		checkString: "Private Activities"
 	};
 

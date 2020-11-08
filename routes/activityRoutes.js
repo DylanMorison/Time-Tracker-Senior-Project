@@ -15,7 +15,7 @@ module.exports = (app, jsonParser) => {
 			const userCount = users.length;
 			const update = { userCount };
 			const filter = { title };
-			Activity.updateMany(filter, update);
+			await Activity.updateMany(filter, update);
 		} catch (error) {
 			console.error(error.msg);
 		}
@@ -34,7 +34,6 @@ module.exports = (app, jsonParser) => {
 		});
 
 		if (activityInstance !== null) {
-			console.log(activityInstance);
 			activityInstance.save();
 		}
 
@@ -78,6 +77,14 @@ module.exports = (app, jsonParser) => {
 			res.send(activityInstance);
 		} catch (err) {
 			res.status(500).send("Server error");
+		}
+	});
+
+	app.get("/api/activity/instances", jsonParser, requireLogin, async (req, res) => {
+		const user = req.user.id;
+		const activities_instances = await ActivityInstance.find({ user });
+		if (activities_instances) {
+			res.send(activities_instances);
 		}
 	});
 

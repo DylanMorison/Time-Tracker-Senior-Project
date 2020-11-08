@@ -5,8 +5,6 @@ const User = mongoose.model("users");
 module.exports = (app, jsonParser) => {
 	app.post("/api/users", jsonParser, requireLogin, async (req, res) => {
 		const { room } = req.body;
-		console.log(room);
-		console.log(req.user);
 		try {
 			const users = await User.find({
 				currentRoom: { $in: [room] }

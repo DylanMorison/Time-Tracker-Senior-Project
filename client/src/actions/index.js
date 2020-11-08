@@ -4,7 +4,10 @@ import {
 	ACTIVITY_INSTANCE,
 	FETCH_PRIVATE_ACTIVITIES,
 	FETCH_PUBLIC_ACTIVITIES,
-	FETCH_ALL_USERS
+	FETCH_ALL_USERS,
+	CREATE_GOAL,
+	FETCH_ALL_GOALS,
+	FETCH_ACTIVITY_INSTANCES
 } from "./types";
 
 // our middleware, reduxThunk, will inspect whatever
@@ -59,6 +62,11 @@ export const fetchActivitiesPrivate = () => async (dispatch) => {
 	dispatch({ type: FETCH_PRIVATE_ACTIVITIES, payload: res.data });
 };
 
+export const fetchActivityInstances = () => async (dispatch) => {
+	const res = await axios.get("/api/activity/instances");
+	dispatch({ type: FETCH_ACTIVITY_INSTANCES, payload: res.data });
+};
+
 export const changeUserName = (username) => async (dispatch) => {
 	const res = await axios.put(
 		"/api/users/username/change",
@@ -81,4 +89,14 @@ export const updateUserRoom = (newRoom) => async (dispatch) => {
 export const fetchUsers = (currentRoom) => async (dispatch) => {
 	const res = await axios.post("/api/users", { room: currentRoom });
 	dispatch({ type: FETCH_ALL_USERS, payload: res.data });
+};
+
+export const createGoal = (activityInstance) => async (dispatch) => {
+	const res = await axios.post("/api/goals/create", activityInstance);
+	dispatch({ type: FETCH_ALL_GOALS, payload: res.data });
+};
+
+export const fetchGoals = () => async (dispatch) => {
+	const res = await axios.get("/api/goals");
+	dispatch({ type: FETCH_ALL_GOALS, payload: res.data });
 };

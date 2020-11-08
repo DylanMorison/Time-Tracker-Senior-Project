@@ -11,6 +11,8 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require("./utils/users_
 require("./models/User");
 require("./models/Activity");
 require("./models/ActivityInstance");
+require("./models/Goal");
+
 require("./services/passport");
 
 mongoose.Promise = global.Promise;
@@ -49,7 +51,7 @@ io.on("connection", (socket) => {
 	socket.emit("message", "Welcome New User!");
 
 	socket.on("joinCurrentPage", (user_id, username, currentPage) => {
-		debugger
+		debugger;
 		const { error, user } = addUser({ id: user_id, username, room: currentPage });
 
 		if (error) {
@@ -57,7 +59,7 @@ io.on("connection", (socket) => {
 		}
 
 		socket.join(user.room);
-		console.log(getUsersInRoom(user.room))
+		console.log(getUsersInRoom(user.room));
 		socket.broadcast.to(user.room).emit("roomData", {
 			room: user.room,
 			users: getUsersInRoom(user.room)
@@ -80,6 +82,7 @@ const jsonParser = bodyParser.json();
 require("./routes/authRoutes")(app);
 require("./routes/activityRoutes")(app, jsonParser);
 require("./routes/userRoutes")(app, jsonParser);
+require("./routes/goalRoutes")(app, jsonParser);
 
 // process.env.NODE_ENV is an envirement variable automatically set by heroku
 if (process.env.NODE_ENV === "production") {

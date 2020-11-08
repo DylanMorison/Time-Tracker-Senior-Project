@@ -14,7 +14,8 @@ const userSchema = new Schema({
 	googleID: String,
 	username: { type: String, required: true, validate: nameValidator },
 	currentRoom: { type: String, default: "" },
-	isActive: { type: Boolean, default: true }
+	isActive: { type: Boolean, default: true },
+	goalsCompleted: { type: Number, default: 0 }
 });
 
 mongoose.model("users", userSchema);

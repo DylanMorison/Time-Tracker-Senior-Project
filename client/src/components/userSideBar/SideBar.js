@@ -3,7 +3,11 @@ import _ from "lodash";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { FaUserCircle } from "react-icons/fa";
+import { AiFillCloseCircle } from "react-icons/ai";
+
 import { fetchUsers } from "../../actions/index";
+
+import Spinner from "react-bootstrap/Spinner";
 
 import "./styles.min.css";
 
@@ -25,6 +29,14 @@ class SideBar extends React.Component {
 		}
 	}
 
+	showButton = () => {
+		if (window.innerWidth <= 960) {
+			this.setState({ button: false });
+		} else {
+			this.setState({ button: true });
+		}
+	};
+
 	checkPathName = () => {
 		switch (this.state.pathname) {
 			case "/profile":
@@ -35,6 +47,10 @@ class SideBar extends React.Component {
 				return "Activities";
 			case "/activities/activity/instance":
 				return `${this.props.activityInstance.title}`;
+			case "/goals":
+				return "Goals";
+			case "/goals/new":
+				return "Creating Goal!";
 			default:
 				return "";
 		}
@@ -79,9 +95,9 @@ class SideBar extends React.Component {
 	render() {
 		return (
 			<div className="chat" className="left-align">
-				<div id="sidebar" className="chat__sidebar">
+				<div id="sidebar" className="chat__sidebar" style={{ cursor: "pointer" }}>
 					<h2 className="room-title" style={{ borderBottom: "solid" }}>
-						room: {this.checkPathName()}
+						room: {this.checkPathName()}{" "}
 					</h2>
 					<ul className="users">
 						<li
@@ -114,6 +130,4 @@ const mapStateToProps = (state) => {
 	};
 };
 
-export default connect(mapStateToProps, { fetchUsers })(
-	withRouter(SideBar)
-);
+export default connect(mapStateToProps, { fetchUsers })(withRouter(SideBar));

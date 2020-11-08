@@ -6,7 +6,8 @@ import publicActivitiesReducer from "./activitiesPublicReducer";
 import privateActivitiesReducer from "./activitiesPrivateReducer";
 import activityInstanceReducer from "./activityInstanceReducer";
 import fetchUsersReducer from "./fetchUsersReducer";
-
+import fetchGoalsReducer from "./fetchGoalsReducer";
+import allInstancesReducer from "./allInstancesReducer";
 // the keys we put into the combineReducers object will represent
 // the keys that exsist inside the state object.
 
@@ -17,5 +18,7 @@ export default combineReducers({
 	publicActivities: publicActivitiesReducer,
 	privateActivities: privateActivitiesReducer,
 	activityInstance: activityInstanceReducer,
-	users: fetchUsersReducer
+	users: fetchUsersReducer,
+	goals: fetchGoalsReducer,
+	instances: allInstancesReducer
 });

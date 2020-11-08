@@ -15,7 +15,7 @@ window.axios = axios;
 const store = createStore(
 	reducers,
 	{},
-	composeWithDevTools(applyMiddleware(reduxThunk, logger))
+	composeWithDevTools(applyMiddleware(reduxThunk))
 );
 
 ReactDom.render(

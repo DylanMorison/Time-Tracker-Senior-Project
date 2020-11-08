@@ -4,4 +4,6 @@ export const FETCH_PUBLIC_ACTIVITIES = "fetch_public_activities";
 export const FETCH_PRIVATE_ACTIVITIES = "fetch_private_activities";
 export const ACTIVITY_INSTANCE = "activity_instance";
 export const FETCH_ALL_USERS = "fetch_all_users";
-
+export const FETCH_ALL_GOALS = "fetch_all_goals";
+export const CREATE_GOAL = "create_goal";
+export const FETCH_ACTIVITY_INSTANCES = "fetch_activity_instances";

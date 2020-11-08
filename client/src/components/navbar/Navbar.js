@@ -132,6 +132,15 @@ class Navbar extends Component {
 										Activities
 									</Link>
 								</li>
+								<li className="nav-item">
+									<Link
+										to={this.props.auth ? "/goals" : "/"}
+										className="nav-links"
+										onClick={this.closeMobileMenu}
+									>
+										Goals
+									</Link>
+								</li>
 								<li className="nav-item">{this.renderLoginLogout()}</li>
 							</ul>
 						</div>
