@@ -45,7 +45,7 @@ class App extends Component {
 						bottom: "0",
 						left: "0",
 						zIndex: "1000",
-						position: "absolute"
+						position: "absolute",
 					}}
 					onClick={() => {
 						this.setState({ sideBar: false });

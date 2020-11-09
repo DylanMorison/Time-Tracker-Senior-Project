@@ -4,6 +4,7 @@ const requireLogin = require("../middlewares/requireLogin");
 const Activity = mongoose.model("activities");
 const ActivityInstance = mongoose.model("activityInstance");
 const User = mongoose.model("users");
+const Goal = mongoose.model("goals");
 
 module.exports = (app, jsonParser) => {
 	app.put("/api/activity/user/count", jsonParser, requireLogin, async (req, res) => {
@@ -22,9 +23,10 @@ module.exports = (app, jsonParser) => {
 	});
 
 	app.put("/api/activity/instance/update", jsonParser, async (req, res) => {
+		debugger;
 		const user = req.user.id;
 		const activity = req.body.activity;
-		const { minutes, title, description } = req.body;
+		const { minutes, title, description, currentMinutes, _id } = req.body;
 
 		const filter = { user, activity, title, description };
 		const update = { minutes };
@@ -35,6 +37,13 @@ module.exports = (app, jsonParser) => {
 
 		if (activityInstance !== null) {
 			activityInstance.save();
+			const filter = { user, activityInstance: _id };
+			const update = { currentMinutes: parseInt(currentMinutes) };
+			await Goal.findOneAndUpdate(filter, update, (err) => {
+				if (err) {
+					console.log(err);
+				}
+			});
 		}
 
 		try {

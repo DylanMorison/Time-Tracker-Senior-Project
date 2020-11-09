@@ -21,7 +21,8 @@ export const fetchUser = () => async (dispatch) => {
 	dispatch({ type: FETCH_USER, payload: res.data });
 };
 
-export const updateActivityInstance = (activityInstance) => async (dispatch) => {
+export const updateActivityInstance = (activityInstance, minutes) => async (dispatch) => {
+	activityInstance = { ...activityInstance, currentMinutes: minutes };
 	const res = await axios.put("/api/activity/instance/update", activityInstance);
 	dispatch({ type: ACTIVITY_INSTANCE, payload: res.data });
 };

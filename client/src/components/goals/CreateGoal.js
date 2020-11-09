@@ -14,15 +14,19 @@ import _ from "lodash";
 import { fetchActivityInstances, createGoal } from "../../actions/index";
 
 class CreateGoal extends Component {
-	state = { term: "", _id: null, title: null, mins: 0, hours: 0 };
+	state = { term: "", _id: null, title: null, mins: 0, hours: 0, instancesTitles: [] };
 
 	componentDidMount() {
 		this.props.fetchActivityInstances();
+		const { instancesTitles } = this.props.location.state;
+		this.setState({ instancesTitles });
 	}
 
 	renderInstances = (instances) => {
 		const cards = instances.map(({ title, _id, description }) => {
-			let border = "primary";
+			if (this.state.instancesTitles.includes(title)) {
+				return;
+			}
 			return (
 				<Card
 					border={this.state._id === _id ? "danger" : "primary"}
@@ -70,31 +74,36 @@ class CreateGoal extends Component {
 		const { instances } = this.props;
 		let allCards = [];
 		var i, j, row;
-		switch (instances.length) {
+		const length = instances.length;
+		switch (length) {
 			case 2:
 				var chunk = 2;
 				for (i = 0, j = instances.length; i < j; i += chunk) {
 					row = instances.slice(i, i + chunk);
 					allCards.push(this.renderRow(row));
 				}
+				break;
 			case 3:
 				var chunk = 3;
 				for (i = 0, j = instances.length; i < j; i += chunk) {
 					row = instances.slice(i, i + chunk);
 					allCards.push(this.renderRow(row));
 				}
+				break;
 			case 4:
 				var chunk = 4;
 				for (i = 0, j = instances.length; i < j; i += chunk) {
 					row = instances.slice(i, i + chunk);
 					allCards.push(this.renderRow(row));
 				}
+				break;
 			default:
 				var chunk = 8;
 				for (i = 0, j = instances.length; i < j; i += chunk) {
 					row = instances.slice(i, i + chunk);
 					allCards.push(this.renderRow(row));
 				}
+				break;
 		}
 
 		return (
@@ -168,8 +177,10 @@ class CreateGoal extends Component {
 								) {
 									alert("You must select a minute or hour goal!");
 								} else if (this.state.term.length < 6) {
-									alert("Your goal name must be atleast 6 characters long!");
-								}else {
+									alert(
+										"Your goal name must be atleast 6 characters long!"
+									);
+								} else {
 									this.props.createGoal({
 										title: this.state.term,
 										instanceTitle: this.state.title,

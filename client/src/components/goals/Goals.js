@@ -15,7 +15,16 @@ class Goals extends Component {
 	componentDidMount() {
 		this.props.fetchGoals();
 		this.props.updateUserRoom("Goals");
+		this.getAllInstanceTitles();
 	}
+
+	getAllInstanceTitles = () => {
+		let tempTitles = [];
+		this.props.goals.forEach((goal) => {
+			tempTitles.push(goal.instanceTitle);
+		});
+		return tempTitles;
+	};
 
 	enterKeyPush = (e) => {
 		if (e.key === "Enter") {
@@ -64,6 +73,7 @@ class Goals extends Component {
 				if (!title.toLowerCase().includes(this.state.term.toLowerCase())) {
 					return false;
 				}
+
 				const now = (currentMinutes / minuteGoal) * 100;
 				const nowStr = `${now.toFixed(2)}%`;
 
@@ -108,7 +118,8 @@ class Goals extends Component {
 							<Card.Text>
 								You have completed {newHoursCompleted} hours and{" "}
 								{newMinutesCompleted} minutes! You have {remainingHours}{" "}
-								hours and {remainingMinutes} left to reach your goal!
+								hours and {remainingMinutes} minutes left to reach your
+								goal!
 							</Card.Text>
 						</Card.Body>
 					</Card>
@@ -143,7 +154,13 @@ class Goals extends Component {
 				})}
 				<div
 					className="fixed-action-btn"
-					onClick={() => this.props.history.push("/goals/new")}
+					onClick={() => {
+						const instancesTitles = this.getAllInstanceTitles();
+						this.props.history.push({
+							pathname: "/goals/new",
+							state: { instancesTitles }
+						});
+					}}
 				>
 					<div className="btn-floating btn-large red">
 						<i className="material-icons">add</i>
@@ -153,7 +170,10 @@ class Goals extends Component {
 		);
 	}
 }
-
+// {
+// 	pathname: "/activities/activity/instance",
+// 	state: { comeFromListBool: true }
+// }
 function mapStateToProps(state) {
 	return { goals: state.goals };
 }

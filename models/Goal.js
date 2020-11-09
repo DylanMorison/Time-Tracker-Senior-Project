@@ -10,5 +10,6 @@ const GoalSchema = new Schema({
 	activityInstance: { type: Schema.Types.ObjectId, ref: "activityInstance" }
 });
 
+GoalSchema.index({ user: 1, activityInstance: 1 }, { unique: true });
 
 mongoose.model("goals", GoalSchema);

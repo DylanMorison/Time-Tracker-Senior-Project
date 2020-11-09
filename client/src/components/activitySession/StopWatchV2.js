@@ -50,10 +50,10 @@ class Stopwatch extends Component {
 	// 	});
 	// };
 
-	updateSession = () => {
+	updateSession = (minutes) => {
 		const { activityInstance } = this.props;
 		activityInstance.minutes += 1;
-		this.props.updateActivityInstance(activityInstance);
+		this.props.updateActivityInstance(activityInstance, minutes);
 	};
 
 	render() {
@@ -73,7 +73,7 @@ class Stopwatch extends Component {
 		if (parseInt(minutes) !== this.state.tempMinutes) {
 			if (this.mounted) {
 				this.setState({ tempMinutes: parseInt(minutes) });
-				this.updateSession();
+				this.updateSession(minutes);
 			}
 		}
 		let secondsPercentage = Math.trunc((seconds / 60) * 100);

@@ -16,8 +16,6 @@ module.exports = (app, jsonParser) => {
 				goal = await Goal.findOne({
 					user,
 					activityInstance,
-					title,
-					minuteGoal,
 					instanceTitle
 				});
 				if (goal) {
