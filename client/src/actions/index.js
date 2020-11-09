@@ -100,3 +100,8 @@ export const fetchGoals = () => async (dispatch) => {
 	const res = await axios.get("/api/goals");
 	dispatch({ type: FETCH_ALL_GOALS, payload: res.data });
 };
+
+export const deleteGoal = (_id) => async (dispatch) => {
+	const res = await axios.post("/api/goals/delete", { _id });
+	dispatch({ type: FETCH_ALL_GOALS, payload: res.data });
+};

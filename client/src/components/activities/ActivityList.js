@@ -55,9 +55,17 @@ class ActivityList extends Component {
 		let chunkSize;
 
 		if (numActivities % 2 === 0) {
-			chunkSize = 4;
-		} else {
+			chunkSize = 2;
+		} else if (numActivities % 3 === 0) {
 			chunkSize = 3;
+		} else if (numActivities % 4 === 0) {
+			chunkSize = 4;
+		} else if (numActivities % 5 === 0) {
+			chunkSize = 5;
+		} else if (numActivities % 6 === 0) {
+			chunkSize = 6;
+		} else {
+			chunkSize = 4;
 		}
 
 		for (index = 0; index < numActivities; index += chunkSize) {

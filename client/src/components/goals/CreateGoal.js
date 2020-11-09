@@ -1,27 +1,27 @@
 import React, { Component } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
 import Form from "react-bootstrap/Form";
-import Container from "react-bootstrap/Container";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 import Jumbotron from "react-bootstrap/Jumbotron";
 import Button from "react-bootstrap/Button";
 import { connect } from "react-redux";
 import CardDeck from "react-bootstrap/CardDeck";
 import Card from "react-bootstrap/Card";
 import { withRouter } from "react-router-dom";
+import Container from "react-bootstrap/Container";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import _ from "lodash";
 
 import { fetchActivityInstances, createGoal } from "../../actions/index";
 
 class CreateGoal extends Component {
-	state = { term: "", _id: null, title: null };
+	state = { term: "", _id: null, title: null, mins: 0, hours: 0 };
 
 	componentDidMount() {
 		this.props.fetchActivityInstances();
 	}
 
 	renderInstances = (instances) => {
-		const test = instances.map(({ title, _id, description }) => {
+		const cards = instances.map(({ title, _id, description }) => {
 			let border = "primary";
 			return (
 				<Card
@@ -40,7 +40,7 @@ class CreateGoal extends Component {
 				</Card>
 			);
 		});
-		return test;
+		return cards;
 	};
 
 	renderRow = (instances) => {
@@ -48,9 +48,15 @@ class CreateGoal extends Component {
 		return <CardDeck>{row}</CardDeck>;
 	};
 
+	renderNums = () => {
+		let nums = _.times(60, (num) => {
+			return <option key={num}>{num}</option>;
+		});
+		return nums;
+	};
+
 	enterKeyPush = (e) => {
 		if (e.key === "Enter") {
-			this.props.changeUserName(this.state.term);
 			this.setState({ term: "" });
 		}
 	};
@@ -104,7 +110,7 @@ class CreateGoal extends Component {
 							size="lg"
 							type="text"
 							pattern="[A-Za-z0-9_-]*$"
-							placeholder="Enter a name for your new goal!"
+							placeholder="Enter Goal Title!"
 							value={this.state.term}
 							onChange={(e) => {
 								let term = e.target.value;
@@ -115,6 +121,39 @@ class CreateGoal extends Component {
 							style={{ textAlign: "center" }}
 						></Form.Control>
 					</Form.Group>
+					<Container>
+						<Row>
+							<Col sm={6}>
+								<Form.Group controlId="exampleForm.ControlSelect1">
+									<Form.Label>Select your hour goal</Form.Label>
+									<Form.Control
+										as="select"
+										size="lg"
+										onChange={(e) =>
+											this.setState({ hours: e.target.value })
+										}
+									>
+										{this.renderNums()}
+									</Form.Control>
+								</Form.Group>
+							</Col>
+							<Col sm={6}>
+								<Form.Group controlId="exampleForm.ControlSelect1">
+									<Form.Label>Select your minute goal</Form.Label>
+									<Form.Control
+										as="select"
+										size="lg"
+										onChange={(e) =>
+											this.setState({ mins: e.target.value })
+										}
+									>
+										{this.renderNums()}
+									</Form.Control>
+								</Form.Group>
+							</Col>
+						</Row>
+					</Container>
+
 					<p>
 						<Button
 							variant="primary"
@@ -123,10 +162,21 @@ class CreateGoal extends Component {
 									alert("Goal name must be less than 50 characters");
 								} else if (this.state._id === null) {
 									alert("You must select an Activity!");
-								} else {
+								} else if (
+									this.state.mins === 0 &&
+									this.state.hours === 0
+								) {
+									alert("You must select a minute or hour goal!");
+								} else if (this.state.term.length < 6) {
+									alert("Your goal name must be atleast 6 characters long!");
+								}else {
 									this.props.createGoal({
 										title: this.state.term,
-										_id: this.state._id
+										instanceTitle: this.state.title,
+										_id: this.state._id,
+										minuteGoal:
+											parseInt(this.state.mins) +
+											parseInt(this.state.hours) * 60
 									});
 									this.props.history.push({
 										pathname: "/goals"
@@ -139,7 +189,11 @@ class CreateGoal extends Component {
 						<Button
 							variant="danger"
 							onClick={() =>
-								this.setState({ term: "", title: null, _id: null })
+								this.setState({
+									term: "",
+									title: null,
+									_id: null
+								})
 							}
 						>
 							Cancel
