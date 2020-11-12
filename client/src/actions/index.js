@@ -89,6 +89,7 @@ export const updateUserRoom = (newRoom) => async (dispatch) => {
 
 export const fetchUsers = (currentRoom) => async (dispatch) => {
 	const res = await axios.post("/api/users", { room: currentRoom });
+	console.log(res.data);
 	dispatch({ type: FETCH_ALL_USERS, payload: res.data });
 };
 

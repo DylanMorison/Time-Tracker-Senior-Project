@@ -13,30 +13,24 @@ import "./styles.min.css";
 
 class SideBar extends React.Component {
 	state = {
-		user: null,
 		pathname: this.props.location.pathname,
-		users: []
+		users: [],
+		init: true
 	};
 
 	componentDidMount() {
 		setInterval(() => {
 			this.props.fetchUsers(this.checkPathName());
-		}, 3000);
-
-		if (this.props.user) {
-			this.setState({ user: this.checkUserName() });
-		}
+		}, 2000);
 	}
+
+	componentWillUnmount() {}
 
 	componentDidUpdate() {
 		if (this.state.pathname !== this.props.location.pathname) {
 			this.setState({ pathname: this.props.location.pathname });
 		}
-		if (this.props.users.length !== this.state.users.length) {
-			this.setState({ users: this.props.users });
-			console.log("Updated props users", this.props.users);
-			console.log("Updated state users", this.state.users);
-		}
+		//console.log(this.props.users);
 	}
 
 	checkPathName = () => {
@@ -71,7 +65,7 @@ class SideBar extends React.Component {
 	};
 
 	renderUsers = () => {
-		return this.state.users.map((user) => {
+		return this.props.users.map((user) => {
 			return (
 				<li
 					key={user._id}
