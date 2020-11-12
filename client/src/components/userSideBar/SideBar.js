@@ -72,9 +72,6 @@ class SideBar extends React.Component {
 
 	renderUsers = () => {
 		return this.state.users.map((user) => {
-			if (user.username === this.checkUserName()) {
-				return;
-			}
 			return (
 				<li
 					key={user._id}
@@ -111,10 +108,10 @@ class SideBar extends React.Component {
 								marginLeft: "6px"
 							}}
 						>
-							<FaUserCircle
+							{/* <FaUserCircle
 								style={{ marginRight: "6px", color: "greenyellow" }}
 							/>
-							{this.checkUserName()}
+							{this.checkUserName()} */}
 						</li>
 
 						{this.renderUsers()}
