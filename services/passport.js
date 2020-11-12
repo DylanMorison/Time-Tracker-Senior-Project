@@ -1,7 +1,7 @@
-const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const mongoose = require('mongoose');
-const keys = require('../config/keys');
+const passport = require("passport");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const mongoose = require("mongoose");
+const keys = require("../config/keys");
 
 // one argument in mongoose.model means we are trying to pull a schema/model
 // out of mongoose
@@ -9,7 +9,7 @@ const keys = require('../config/keys');
 
 // This User object is our model class
 // we can use it to create a new instance of a user
-const User = mongoose.model('users');
+const User = mongoose.model("users");
 
 // define arrow function and pass it to passport.serializeUser()
 passport.serializeUser((user, done) => {
@@ -31,7 +31,7 @@ passport.use(
 		{
 			clientID: keys.googleClientID,
 			clientSecret: keys.googleClientSecret,
-			callbackURL: '/auth/google/callback',
+			callbackURL: "/auth/google/callback",
 			proxy: true
 		},
 		async (accessToken, refreshToken, profile, done) => {
@@ -41,7 +41,7 @@ passport.use(
 			// Initiating an async action. It will consequently return a promise.
 			// ( TL:DR This is a query that returns a promise)
 			const existingUser = await User.findOne({ googleID: profile.id });
-			
+
 			if (existingUser) {
 				// we already have a record with given googleID
 				// we are all finsihed, here is the user we found!
@@ -49,7 +49,10 @@ passport.use(
 			}
 			// we dont have user record with this googleID, make a new record
 			//when we call save() it will save the model isntance to the database for us
-			const user = await new User({ googleID: profile.id, username: "default_user_name" }).save();
+			const user = await new User({
+				googleID: profile.id,
+				username: profile.name.givenName
+			}).save();
 			// we always make use of the provided user
 			// in the proimse callback
 			done(null, user);

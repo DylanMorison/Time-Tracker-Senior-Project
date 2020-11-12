@@ -14,28 +14,35 @@ import "./styles.min.css";
 class SideBar extends React.Component {
 	state = {
 		user: null,
-		pathname: this.props.location.pathname
+		pathname: this.props.location.pathname,
+		users: this.props.users
 	};
 
 	componentDidMount() {
 		setInterval(() => {
 			this.props.fetchUsers(this.checkPathName());
 		}, 3000);
+		if (this.props.users) {
+			this.setState({ users: this.props.users });
+		}
+		if (this.props.user) {
+			this.setState({ user: this.checkUserName() });
+		}
+		console.log("Mounted props users", this.props.users)
+		console.log("Mounted state users", this.state.users)
+
 	}
 
 	componentDidUpdate() {
 		if (this.state.pathname !== this.props.location.pathname) {
 			this.setState({ pathname: this.props.location.pathname });
+		} 
+		if (this.props.users.length !== this.state.users.length){
+			this.setState({ users: this.props.users})
+			console.log("Updated props users", this.props.users)
+			console.log("Updated state users", this.state.users)
 		}
 	}
-
-	showButton = () => {
-		if (window.innerWidth <= 960) {
-			this.setState({ button: false });
-		} else {
-			this.setState({ button: true });
-		}
-	};
 
 	checkPathName = () => {
 		switch (this.state.pathname) {
@@ -69,7 +76,7 @@ class SideBar extends React.Component {
 	};
 
 	renderUsers = () => {
-		return this.props.users.map((user) => {
+		return this.state.users.map((user) => {
 			if (user.username === this.checkUserName()) {
 				return;
 			}
@@ -114,6 +121,7 @@ class SideBar extends React.Component {
 							/>
 							{this.checkUserName()}
 						</li>
+						
 						{this.renderUsers()}
 					</ul>
 				</div>
