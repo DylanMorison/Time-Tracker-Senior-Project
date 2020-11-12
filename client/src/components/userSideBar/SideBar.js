@@ -15,32 +15,27 @@ class SideBar extends React.Component {
 	state = {
 		user: null,
 		pathname: this.props.location.pathname,
-		users: this.props.users
+		users: []
 	};
 
 	componentDidMount() {
 		setInterval(() => {
 			this.props.fetchUsers(this.checkPathName());
 		}, 3000);
-		if (this.props.users) {
-			this.setState({ users: this.props.users });
-		}
+
 		if (this.props.user) {
 			this.setState({ user: this.checkUserName() });
 		}
-		console.log("Mounted props users", this.props.users)
-		console.log("Mounted state users", this.state.users)
-
 	}
 
 	componentDidUpdate() {
 		if (this.state.pathname !== this.props.location.pathname) {
 			this.setState({ pathname: this.props.location.pathname });
-		} 
-		if (this.props.users.length !== this.state.users.length){
-			this.setState({ users: this.props.users})
-			console.log("Updated props users", this.props.users)
-			console.log("Updated state users", this.state.users)
+		}
+		if (this.props.users.length !== this.state.users.length) {
+			this.setState({ users: this.props.users });
+			console.log("Updated props users", this.props.users);
+			console.log("Updated state users", this.state.users);
 		}
 	}
 
@@ -121,7 +116,7 @@ class SideBar extends React.Component {
 							/>
 							{this.checkUserName()}
 						</li>
-						
+
 						{this.renderUsers()}
 					</ul>
 				</div>
