@@ -1,10 +1,15 @@
-import React from 'react';
-import { reduxForm } from 'redux-form';
-import ActivityForm from './ActivityForm';
-import ActivityFormReview from './ActivityFormReview';
-
+import React from "react";
+import { connect } from "react-redux";
+import { reduxForm } from "redux-form";
+import ActivityForm from "./ActivityForm";
+import ActivityFormReview from "./ActivityFormReview";
+import { updateUserRoom } from "../../actions/index";
 class ActivityNew extends React.Component {
 	state = { showFormActivity: false };
+
+	componentDidMount() {
+		this.props.updateUserRoom("activityCreation");
+	}
 
 	renderContent() {
 		if (this.state.showFormActivity) {
@@ -29,6 +34,12 @@ class ActivityNew extends React.Component {
 	}
 }
 
-export default reduxForm({
-	form: 'activityForm'
-})(ActivityNew);
+function mapStateToProps(state) {
+	return {};
+}
+
+export default connect(mapStateToProps, {updateUserRoom})(
+	reduxForm({
+		form: "activityForm"
+	})(ActivityNew)
+);

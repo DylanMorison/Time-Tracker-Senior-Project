@@ -11,12 +11,13 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import _ from "lodash";
 
-import { fetchActivityInstances, createGoal } from "../../actions/index";
+import { fetchActivityInstances, createGoal, updateUserRoom } from "../../actions/index";
 
 class CreateGoal extends Component {
 	state = { term: "", _id: null, title: null, mins: 0, hours: 0, instancesTitles: [] };
 
 	componentDidMount() {
+		this.props.updateUserRoom("goalCreation");
 		this.props.fetchActivityInstances();
 		const { instancesTitles } = this.props.location.state;
 		this.setState({ instancesTitles });
@@ -223,6 +224,8 @@ function mapStateToProps(state) {
 	return { instances: state.instances };
 }
 
-export default connect(mapStateToProps, { fetchActivityInstances, createGoal })(
-	withRouter(CreateGoal)
-);
+export default connect(mapStateToProps, {
+	fetchActivityInstances,
+	createGoal,
+	updateUserRoom
+})(withRouter(CreateGoal));

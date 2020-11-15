@@ -82,12 +82,15 @@ export const changeUserName = (username) => async (dispatch) => {
 };
 
 export const updateUserRoom = (newRoom) => async (dispatch) => {
+	debugger;
 	const res = await axios.post("/api/users/page/update", { newRoom });
 	console.log(res);
 	dispatch({ type: FETCH_USER, payload: res.data });
 };
 
 export const fetchUsers = (currentRoom) => async (dispatch) => {
+	debugger;
+
 	const res = await axios.post("/api/users", { room: currentRoom });
 	console.log(res.data);
 	dispatch({ type: FETCH_ALL_USERS, payload: res.data });

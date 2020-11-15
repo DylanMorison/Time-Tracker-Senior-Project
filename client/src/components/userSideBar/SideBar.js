@@ -21,10 +21,9 @@ class SideBar extends React.Component {
 	componentDidMount() {
 		setInterval(() => {
 			this.props.fetchUsers(this.checkPathName());
+			console.log(this.props.users);
 		}, 2000);
 	}
-
-	componentWillUnmount() {}
 
 	componentDidUpdate() {
 		if (this.state.pathname !== this.props.location.pathname) {
@@ -46,7 +45,30 @@ class SideBar extends React.Component {
 			case "/goals":
 				return "Goals";
 			case "/goals/new":
+				return "goalCreation";
+			case "/activities/new":
+				return "activityCreation";
+			default:
+				return "";
+		}
+	};
+
+	renderPathName = () => {
+		switch (this.state.pathname) {
+			case "/profile":
+				return "Profile";
+			case "/":
+				return "Home";
+			case "/activities":
+				return "Activities";
+			case "/activities/activity/instance":
+				return `${this.props.activityInstance.title}`;
+			case "/goals":
+				return "Goals";
+			case "/goals/new":
 				return "Creating Goal!";
+			case "/activities/new":
+				return "Creating Activity!";
 			default:
 				return "";
 		}
@@ -90,7 +112,7 @@ class SideBar extends React.Component {
 			<div className="chat" className="left-align">
 				<div id="sidebar" className="chat__sidebar" style={{ cursor: "pointer" }}>
 					<h2 className="room-title" style={{ borderBottom: "solid" }}>
-						room: {this.checkPathName()}{" "}
+						room: {this.renderPathName()}{" "}
 					</h2>
 					<ul className="users">
 						<li
