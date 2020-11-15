@@ -41,11 +41,10 @@ class App extends Component {
 				<div
 					id="right"
 					style={{
-						position: "sticky",
-						bottom: "0",
+						position: "fixed",
 						left: "0",
+						top: "0",
 						zIndex: "1000",
-						position: "absolute",
 					}}
 					onClick={() => {
 						this.setState({ sideBar: false });
@@ -59,11 +58,10 @@ class App extends Component {
 				<div
 					id="right"
 					style={{
-						position: "sticky",
+						position: "fixed",
 						bottom: "0",
 						left: "0",
 						zIndex: "1000",
-						position: "absolute"
 					}}
 				>
 					<Button
