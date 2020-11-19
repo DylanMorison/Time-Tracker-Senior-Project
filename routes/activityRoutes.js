@@ -23,7 +23,6 @@ module.exports = (app, jsonParser) => {
 	});
 
 	app.put("/api/activity/instance/update", jsonParser, async (req, res) => {
-		uedebugger;
 		const user = req.user.id;
 		const activity = req.body.activity;
 		const { minutes, title, description, currentMinutes, _id } = req.body;
